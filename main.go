@@ -1,9 +1,13 @@
 package main
 
 import (
-	"log"
+	"main/cmd"
+	"os"
 )
 
 func main() {
-	log.Println("main")
+	if err := cmd.Execute(); err != nil {
+		os.Exit(1)
+	}
+	os.Exit(0)
 }
