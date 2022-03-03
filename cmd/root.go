@@ -6,6 +6,13 @@ import (
 	"github.com/spf13/cobra"
 )
 
+const (
+	configFilePathFlag      = "config"
+	configFilePathShorthand = "c"
+	configFilePathDefault   = ""
+	configFilePathUsage     = "specify config file path"
+)
+
 func newRootCmd() (result *cobra.Command, err error) {
 	result = &cobra.Command{
 		Run: func(cmd *cobra.Command, args []string) {
@@ -13,5 +20,6 @@ func newRootCmd() (result *cobra.Command, err error) {
 			log.Printf("[%s] in run function", funcName)
 		},
 	}
+	result.PersistentFlags().StringVarP(&configFilePath, configFilePathFlag, configFilePathShorthand, configFilePathDefault, configFilePathUsage)
 	return
 }

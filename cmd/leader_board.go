@@ -8,7 +8,7 @@ import (
 
 func newLeaderBoardCmd() (result *cobra.Command, err error) {
 	result = &cobra.Command{
-		Use: "leader-board",
+		Use: "leaderboard",
 		Run: func(cmd *cobra.Command, args []string) {
 			funcName := "leaderBoardCmd.Run"
 			log.Printf("[%s] in run function", funcName)
