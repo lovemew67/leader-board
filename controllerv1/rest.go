@@ -141,6 +141,8 @@ func (gs *GinServer) initRoutings() {
 	{
 		staffGroup.GET("", gs.listStaffV1Handler)
 		staffGroup.POST("", gs.createStaffV1Handler)
+		staffGroup.PATCH("", gs.panicTester)
+
 		staffGroup.OPTIONS("")
 	}
 }
@@ -190,4 +192,8 @@ func (gs *GinServer) listStaffV1Handler(c *gin.Context) {
 		"staff": results,
 		"total": total,
 	})
+}
+
+func (gs *GinServer) panicTester(c *gin.Context) {
+	panic("panic on purpose")
 }
