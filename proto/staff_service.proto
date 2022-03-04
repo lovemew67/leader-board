@@ -1,0 +1,66 @@
+syntax = "proto3";
+
+package proto;
+
+import "staff.proto";
+import "google/api/annotations.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+
+option go_package = ".;proto";
+
+option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
+  info: {
+    version: "0.1";
+  };
+  host: "localhost:8999";
+  schemes: [
+    HTTP
+  ];
+};
+
+service StaffServiceV1 {
+  rpc ListStaffV1(ListStaffV1Request) returns (ListStaffV1Response) {
+    option (google.api.http) = {
+      get: "/v1/staff"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "List staff"
+      description: "List all staff on the server."
+    };
+  }
+  rpc CreateStaffV1(CreateStaffV1Request) returns (CreateStaffV1Response) {
+    option (google.api.http) = {
+      post: "/v1/staff"
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Add a staff"
+      description: "Add a staff to the server."
+    };
+  }
+}
+
+// list staff
+
+message ListStaffV1Request {}
+
+message ListStaffV1Response {
+  int32 code = 1;
+  int32 sub_code = 2;
+  string error_message = 3;
+  int32 total = 4;
+  repeated StaffV1 staff = 5;
+}
+
+// create staff
+
+message CreateStaffV1Request {
+  StaffV1 staff = 1;
+}
+
+message CreateStaffV1Response {
+  int32 code = 1;
+  int32 sub_code = 2;
+  string error_message = 3;
+  StaffV1 staff = 4;
+}
