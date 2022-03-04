@@ -1,0 +1,9 @@
+# folder
+.vscode
+.idea
+data
+
+# files
+.DS_Store
+main
+main.exe

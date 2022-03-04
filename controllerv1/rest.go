@@ -2,15 +2,22 @@ package controllerv1
 
 import (
 	"context"
+	"fmt"
+	"log"
 	"main/domainv1"
 	"main/servicev1"
 	"net/http"
 	"time"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/lovemew67/public-misc/cornerstone"
 	"github.com/spf13/viper"
 )
+
+type middlewareResponse struct {
+	ErrorMessage string `json:"error_message,omitempty"`
+}
 
 func InitGinServer(_ss servicev1.StaffV1Service) (gs *GinServer) {
 	// create gin server.
@@ -21,6 +28,7 @@ func InitGinServer(_ss servicev1.StaffV1Service) (gs *GinServer) {
 		Engine: gin.New(),
 	}
 	gs.initRoutings()
+	gs.NoRoute(noRouteMiddleware())
 	return
 }
 
@@ -59,9 +67,68 @@ type GinServer struct {
 	*gin.Engine
 }
 
+func panicMiddleware() (result gin.HandlerFunc) {
+	result = func(c *gin.Context) {
+		defer func() {
+			funcName := "panicMiddleware"
+			if err := recover(); err != nil {
+				log.Printf("[%s] recovered from panic, err: %+v", funcName, err)
+				c.AbortWithStatusJSON(http.StatusInternalServerError, middlewareResponse{
+					ErrorMessage: fmt.Sprintf("panic occured, err: %+v", err),
+				})
+			}
+		}()
+		c.Next()
+	}
+	return
+}
+
+func noRouteMiddleware() (result gin.HandlerFunc) {
+	result = func(c *gin.Context) {
+		c.AbortWithStatusJSON(http.StatusInternalServerError, middlewareResponse{
+			ErrorMessage: fmt.Sprintf("page not found, method: %s uri: %s", c.Request.Method, c.Request.Host+c.Request.URL.Path),
+		})
+	}
+	return
+}
+
+// for swagger
+func getCORSConfig() (config cors.Config) {
+	config = cors.Config{
+		MaxAge:           1728000 * time.Second,
+		AllowAllOrigins:  true,
+		AllowCredentials: true,
+		AllowMethods: []string{
+			http.MethodGet,
+			http.MethodPost,
+			http.MethodOptions,
+			http.MethodDelete,
+			http.MethodPatch,
+			http.MethodPut,
+		},
+		AllowHeaders: []string{
+			"Authorization",
+			"Cache-Control",
+			"Content-Type",
+			"DNT",
+			"If-Modified-Since",
+			"Keep-Alive",
+			"User-Agent",
+			"X-CustomHeader",
+			"X-Requested-With",
+		},
+		ExposeHeaders: []string{
+			"content-disposition",
+		},
+	}
+	return
+}
+
 func (gs *GinServer) initRoutings() {
 	// add data retention group
 	rootGroup := gs.Group("")
+	rootGroup.Use(panicMiddleware())
+	rootGroup.Use(cors.New(getCORSConfig()))
 
 	// general service for debugging
 	{
@@ -74,6 +141,7 @@ func (gs *GinServer) initRoutings() {
 	{
 		staffGroup.GET("", gs.listStaffV1Handler)
 		staffGroup.POST("", gs.createStaffV1Handler)
+		staffGroup.OPTIONS("")
 	}
 }
 

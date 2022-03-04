@@ -29,7 +29,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/protoListStaffV1Response"
+              "$ref": "#/definitions/protoListStaffV1OutterResponse"
             }
           },
           "default": {
@@ -67,7 +67,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/protoCreateStaffV1Request"
+              "$ref": "#/definitions/protoStaffV1"
             }
           }
         ],
@@ -78,56 +78,34 @@
     }
   },
   "definitions": {
-    "protoCreateStaffV1Request": {
-      "type": "object",
-      "properties": {
-        "staff": {
-          "$ref": "#/definitions/protoStaffV1"
-        }
-      }
-    },
     "protoCreateStaffV1Response": {
       "type": "object",
       "properties": {
-        "code": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "subCode": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "errorMessage": {
-          "type": "string"
-        },
-        "staff": {
+        "result": {
           "$ref": "#/definitions/protoStaffV1"
         }
       }
     },
-    "protoListStaffV1Response": {
+    "protoListStaffV1InnerResponse": {
       "type": "object",
       "properties": {
-        "code": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "subCode": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "errorMessage": {
-          "type": "string"
-        },
-        "total": {
-          "type": "integer",
-          "format": "int32"
-        },
         "staff": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/protoStaffV1"
           }
+        },
+        "total": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "protoListStaffV1OutterResponse": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "$ref": "#/definitions/protoListStaffV1InnerResponse"
         }
       }
     },
@@ -151,14 +129,6 @@
         "name": {
           "type": "string",
           "title": "@inject_tag: json:\"name,omitempty\" bson:\"name,omitempty\" gorm:\"column:name\""
-        },
-        "email": {
-          "type": "string",
-          "title": "@inject_tag: json:\"email,omitempty\" bson:\"email,omitempty\" gorm:\"column:email\""
-        },
-        "avatarUrl": {
-          "type": "string",
-          "title": "@inject_tag: json:\"avatar_url,omitempty\" bson:\"avatar_url,omitempty\" gorm:\"column:avatar_url\""
         }
       }
     },

@@ -26,14 +26,9 @@ endif
 
 ## Define targets
 
-all: updatevendor
-	go run main.go
-
 genproto:
 	protoc -I ./proto \
 	--go_out ./gen/go/proto --go_opt paths=source_relative \
-	--go-grpc_out ./gen/go/proto --go_opt paths=source_relative \
-	--grpc-gateway_out ./gen/go/proto --grpc-gateway_opt paths=source_relative \
 	--openapiv2_out ./gen/openapiv2 --openapiv2_opt logtostderr=true \
 	./proto/*.proto
 
@@ -55,8 +50,11 @@ updatevendor:
 	go mod vendor
 	go vet ./...
 
+test: updatevendor	
+	go test -mod=vendor -v -race -cover -timeout 180s ./...
+
 install: updatevendor
-	go install -mod=mod -v -ldflags "-s -X $(PKGPATH).appName=$(APP) -X $(PKGPATH).gitCommit=$(REVISION) -X $(PKGPATH).gitBranch=$(BR) -X $(PKGPATH).appVersion=$(TAG) -X $(PKGPATH).buildDate=$(DATE)" $(SOURCE) 
+	go install -mod=vendor -v -ldflags "-s -X $(PKGPATH).appName=$(APP) -X $(PKGPATH).gitCommit=$(REVISION) -X $(PKGPATH).gitBranch=$(BR) -X $(PKGPATH).appVersion=$(TAG) -X $(PKGPATH).buildDate=$(DATE)" $(SOURCE) 
 
 leaderboard: install
 	$(GOPATH)/bin/$(APP) leaderboard --config $(CONF)
