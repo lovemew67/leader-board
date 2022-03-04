@@ -26,9 +26,7 @@ endif
 
 ## Define targets
 
-all:
-	go mod tidy
-	go mod verify
+all: updatevendor
 	go run main.go
 
 genproto:
