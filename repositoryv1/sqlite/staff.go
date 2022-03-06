@@ -2,9 +2,10 @@ package sqlite
 
 import (
 	"fmt"
-	"main/gen/go/proto"
-	"main/repositoryv1"
 	"time"
+
+	"github.com/lovemew67/leader-board/gen/go/proto"
+	"github.com/lovemew67/leader-board/repositoryv1"
 
 	"github.com/google/uuid"
 	"github.com/jinzhu/gorm"

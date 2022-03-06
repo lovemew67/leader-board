@@ -4,10 +4,11 @@ import (
 	"context"
 	"fmt"
 	"log"
-	"main/domainv1"
-	"main/servicev1"
 	"net/http"
 	"time"
+
+	"github.com/lovemew67/leader-board/domainv1"
+	"github.com/lovemew67/leader-board/servicev1"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"

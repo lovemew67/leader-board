@@ -5,11 +5,11 @@
 package servicev1mock
 
 import (
-	domainv1 "main/domainv1"
-	proto "main/gen/go/proto"
 	reflect "reflect"
 
 	gomock "github.com/golang/mock/gomock"
+	domainv1 "github.com/lovemew67/leader-board/domainv1"
+	proto "github.com/lovemew67/leader-board/gen/go/proto"
 )
 
 // MockStaffV1Service is a mock of StaffV1Service interface.

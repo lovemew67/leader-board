@@ -1,10 +1,11 @@
 package servicev1
 
 import (
-	"main/domainv1"
-	"main/gen/go/proto"
-	"main/repositoryv1mock"
 	"testing"
+
+	"github.com/lovemew67/leader-board/domainv1"
+	"github.com/lovemew67/leader-board/gen/go/proto"
+	"github.com/lovemew67/leader-board/repositoryv1mock"
 
 	"github.com/golang/mock/gomock"
 	"github.com/stretchr/testify/assert"

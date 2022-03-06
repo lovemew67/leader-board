@@ -5,10 +5,10 @@
 package repositoryv1mock
 
 import (
-	proto "main/gen/go/proto"
 	reflect "reflect"
 
 	gomock "github.com/golang/mock/gomock"
+	proto "github.com/lovemew67/leader-board/gen/go/proto"
 )
 
 // MockStaffV1Repository is a mock of StaffV1Repository interface.

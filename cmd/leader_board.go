@@ -2,12 +2,13 @@ package cmd
 
 import (
 	"log"
-	"main/controllerv1"
-	"main/repositoryv1/sqlite"
-	"main/servicev1"
 	"os"
 	"os/signal"
 	"syscall"
+
+	"github.com/lovemew67/leader-board/controllerv1"
+	"github.com/lovemew67/leader-board/repositoryv1/sqlite"
+	"github.com/lovemew67/leader-board/servicev1"
 
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
 

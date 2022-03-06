@@ -1,8 +1,8 @@
 package servicev1
 
 import (
-	"main/domainv1"
-	"main/gen/go/proto"
+	"github.com/lovemew67/leader-board/domainv1"
+	"github.com/lovemew67/leader-board/gen/go/proto"
 )
 
 type StaffV1Service interface {

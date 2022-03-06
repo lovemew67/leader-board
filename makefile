@@ -3,7 +3,7 @@
 # static variables
 APP=main
 SOURCE=./...
-CONF=leaderboard.toml
+CONF=local.toml
 PKGPATH=github.com/lovemew67/public-misc/cornerstone
 
 # derived variables

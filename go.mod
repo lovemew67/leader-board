@@ -1,4 +1,4 @@
-module main
+module github.com/lovemew67/leader-board
 
 go 1.16
 

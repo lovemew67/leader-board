@@ -1,7 +1,7 @@
 package domainv1
 
 import (
-	"main/gen/go/proto"
+	"github.com/lovemew67/leader-board/gen/go/proto"
 )
 
 // staff v1

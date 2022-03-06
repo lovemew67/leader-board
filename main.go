@@ -1,8 +1,9 @@
 package main
 
 import (
-	"main/cmd"
 	"os"
+
+	"github.com/lovemew67/leader-board/cmd"
 )
 
 func main() {

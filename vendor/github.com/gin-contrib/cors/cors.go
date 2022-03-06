@@ -42,7 +42,7 @@ type Config struct {
 	// can be cached
 	MaxAge time.Duration
 
-	// Allows to add origins like http://some-domain/*, https://api.* or http://some.*.subdomain.com
+	// Allows to add origins like http://some-dogithub.com/lovemew67/leader-board/*, https://api.* or http://some.*.subdomain.com
 	AllowWildcard bool
 
 	// Allows usage of popular browser extensions schemas
