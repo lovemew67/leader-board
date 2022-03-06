@@ -78,3 +78,69 @@ func (mr *MockStaffV1RepositoryMockRecorder) QueryAllStaffWithOffsetAndLimit(off
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "QueryAllStaffWithOffsetAndLimit", reflect.TypeOf((*MockStaffV1Repository)(nil).QueryAllStaffWithOffsetAndLimit), offset, limit)
 }
+
+// MockStaffV1CacheRepository is a mock of StaffV1CacheRepository interface.
+type MockStaffV1CacheRepository struct {
+	ctrl     *gomock.Controller
+	recorder *MockStaffV1CacheRepositoryMockRecorder
+}
+
+// MockStaffV1CacheRepositoryMockRecorder is the mock recorder for MockStaffV1CacheRepository.
+type MockStaffV1CacheRepositoryMockRecorder struct {
+	mock *MockStaffV1CacheRepository
+}
+
+// NewMockStaffV1CacheRepository creates a new mock instance.
+func NewMockStaffV1CacheRepository(ctrl *gomock.Controller) *MockStaffV1CacheRepository {
+	mock := &MockStaffV1CacheRepository{ctrl: ctrl}
+	mock.recorder = &MockStaffV1CacheRepositoryMockRecorder{mock}
+	return mock
+}
+
+// EXPECT returns an object that allows the caller to indicate expected use.
+func (m *MockStaffV1CacheRepository) EXPECT() *MockStaffV1CacheRepositoryMockRecorder {
+	return m.recorder
+}
+
+// CleanTopNScores mocks base method.
+func (m *MockStaffV1CacheRepository) CleanTopNScores() error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "CleanTopNScores")
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// CleanTopNScores indicates an expected call of CleanTopNScores.
+func (mr *MockStaffV1CacheRepositoryMockRecorder) CleanTopNScores() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CleanTopNScores", reflect.TypeOf((*MockStaffV1CacheRepository)(nil).CleanTopNScores))
+}
+
+// GetTopNScores mocks base method.
+func (m *MockStaffV1CacheRepository) GetTopNScores() ([]*proto.StaffV1, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetTopNScores")
+	ret0, _ := ret[0].([]*proto.StaffV1)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetTopNScores indicates an expected call of GetTopNScores.
+func (mr *MockStaffV1CacheRepositoryMockRecorder) GetTopNScores() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetTopNScores", reflect.TypeOf((*MockStaffV1CacheRepository)(nil).GetTopNScores))
+}
+
+// SetTopNScores mocks base method.
+func (m *MockStaffV1CacheRepository) SetTopNScores(arg0 []*proto.StaffV1) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "SetTopNScores", arg0)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// SetTopNScores indicates an expected call of SetTopNScores.
+func (mr *MockStaffV1CacheRepositoryMockRecorder) SetTopNScores(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetTopNScores", reflect.TypeOf((*MockStaffV1CacheRepository)(nil).SetTopNScores), arg0)
+}

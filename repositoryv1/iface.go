@@ -9,3 +9,9 @@ type StaffV1Repository interface {
 	CountTotalStaff() (int, error)
 	QueryAllStaffWithOffsetAndLimit(offset, limit int) ([]*proto.StaffV1, error)
 }
+
+type StaffV1CacheRepository interface {
+	SetTopNScores([]*proto.StaffV1) error
+	GetTopNScores() ([]*proto.StaffV1, error)
+	CleanTopNScores() error
+}

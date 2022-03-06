@@ -18,7 +18,9 @@ func Test_CreateStaffV1Service(t *testing.T) {
 	mockStaffV1Repositorier := repositoryv1mock.NewMockStaffV1Repository(controller)
 	mockStaffV1Repositorier.EXPECT().CreateStaff(gomock.Any()).Return(&proto.StaffV1{}, nil)
 
-	mockStaffV1Servicer, err := NewStaffV1Servicer(mockStaffV1Repositorier)
+	mockStaffV1CacheRepositorier := repositoryv1mock.NewMockStaffV1CacheRepository(controller)
+
+	mockStaffV1Servicer, err := NewStaffV1Servicer(mockStaffV1Repositorier, mockStaffV1CacheRepositorier)
 	assert.NoError(t, err)
 
 	req := &domainv1.CreateStaffV1ServiceRequest{}

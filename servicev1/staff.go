@@ -11,7 +11,8 @@ var (
 )
 
 type StaffV1Servicer struct {
-	r repositoryv1.StaffV1Repository
+	r  repositoryv1.StaffV1Repository
+	cr repositoryv1.StaffV1CacheRepository
 }
 
 func (s *StaffV1Servicer) CreateStaffV1Service(req *domainv1.CreateStaffV1ServiceRequest) (result *proto.StaffV1, err error) {
@@ -28,9 +29,10 @@ func (s *StaffV1Servicer) ListStaffV1Service(req *domainv1.ListStaffV1ServiceReq
 	return
 }
 
-func NewStaffV1Servicer(_r repositoryv1.StaffV1Repository) (result *StaffV1Servicer, err error) {
+func NewStaffV1Servicer(_r repositoryv1.StaffV1Repository, _cr repositoryv1.StaffV1CacheRepository) (result *StaffV1Servicer, err error) {
 	result = &StaffV1Servicer{
-		r: _r,
+		r:  _r,
+		cr: _cr,
 	}
 	return
 }

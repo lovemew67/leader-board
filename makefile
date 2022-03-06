@@ -1,7 +1,7 @@
 ## Define variables
 
 # static variables
-APP=main
+APP=leader-board
 SOURCE=./...
 CONF=local.toml
 PKGPATH=github.com/lovemew67/public-misc/cornerstone

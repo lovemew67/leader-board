@@ -10,7 +10,8 @@ require (
 	github.com/google/uuid v1.3.0
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.8.0
 	github.com/jinzhu/gorm v1.9.16
-	github.com/lovemew67/public-misc/cornerstone v0.0.0-20220306135933-3b8b663f51fc
+	github.com/lovemew67/public-misc/connection-poller v0.0.0-20220306151101-82075db4715b
+	github.com/lovemew67/public-misc/cornerstone v0.0.0-20220306151101-82075db4715b
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/spf13/cobra v1.3.0
 	github.com/spf13/viper v1.10.1

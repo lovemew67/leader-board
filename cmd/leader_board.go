@@ -1,17 +1,17 @@
 package cmd
 
 import (
-	"log"
 	"os"
 	"os/signal"
 	"syscall"
 
+	_ "github.com/jinzhu/gorm/dialects/sqlite"
+	conredis "github.com/lovemew67/public-misc/connection-poller/redis"
+
 	"github.com/lovemew67/leader-board/controllerv1"
+	"github.com/lovemew67/leader-board/repositoryv1/redis"
 	"github.com/lovemew67/leader-board/repositoryv1/sqlite"
 	"github.com/lovemew67/leader-board/servicev1"
-
-	_ "github.com/jinzhu/gorm/dialects/sqlite"
-
 	"github.com/lovemew67/public-misc/cornerstone"
 	"github.com/spf13/cobra"
 )
@@ -25,8 +25,8 @@ func newLeaderBoardCmd() (result *cobra.Command, err error) {
 		Use: "leaderboard",
 		Run: func(cmd *cobra.Command, args []string) {
 			funcName := "leaderBoardCmd.Run"
-			log.Printf("[%s] in run function", funcName)
 
+			// init context
 			ctx := cornerstone.NewContext()
 
 			// init repository
@@ -34,9 +34,15 @@ func newLeaderBoardCmd() (result *cobra.Command, err error) {
 			if errRepository != nil {
 				cornerstone.Panicf(ctx, "[%s] failed to create staff v1 repositiory, err: %+v", funcName, errRepository)
 			}
+			staffV1CacheRepositorier, errRepository := redis.NewStaffV1RedisCacheRepositorier(ctx, &conredis.Config{
+				Host: "localhost:6379",
+			})
+			if errRepository != nil {
+				cornerstone.Panicf(ctx, "[%s] failed to create staff v1 cache repositiory, err: %+v", funcName, errRepository)
+			}
 
 			// init service
-			staffV1Service, errService := servicev1.NewStaffV1Servicer(staffV1Repositorier)
+			staffV1Service, errService := servicev1.NewStaffV1Servicer(staffV1Repositorier, staffV1CacheRepositorier)
 			if errService != nil {
 				cornerstone.Panicf(ctx, "[%s] failed to create staff v1 service, err: %+v", funcName, errService)
 			}

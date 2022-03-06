@@ -27,6 +27,8 @@ github.com/golang/mock/gomock
 # github.com/golang/protobuf v1.5.2
 ## explicit
 github.com/golang/protobuf/proto
+# github.com/gomodule/redigo v1.8.8
+github.com/gomodule/redigo/redis
 # github.com/google/uuid v1.3.0
 ## explicit
 github.com/google/uuid
@@ -56,7 +58,10 @@ github.com/jinzhu/inflection
 github.com/json-iterator/go
 # github.com/leodido/go-urn v1.2.0
 github.com/leodido/go-urn
-# github.com/lovemew67/public-misc/cornerstone v0.0.0-20220306135933-3b8b663f51fc
+# github.com/lovemew67/public-misc/connection-poller v0.0.0-20220306151101-82075db4715b
+## explicit
+github.com/lovemew67/public-misc/connection-poller/redis
+# github.com/lovemew67/public-misc/cornerstone v0.0.0-20220306151101-82075db4715b
 ## explicit
 github.com/lovemew67/public-misc/cornerstone
 # github.com/magiconair/properties v1.8.5
