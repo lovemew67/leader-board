@@ -31,13 +31,13 @@ type StaffV1 struct {
 	unknownFields protoimpl.UnknownFields
 
 	// @inject_tag: json:"id" bson:"id" gorm:"column:id;primary_key"
-	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id" bson:"id" gorm:"column:id;primary_key"`
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	// @inject_tag: json:"created" bson:"created,omitempty" gorm:"column:created"
-	Created int64 `protobuf:"varint,2,opt,name=created,proto3" json:"created" bson:"created,omitempty" gorm:"column:created"`
+	Created int64 `protobuf:"varint,2,opt,name=created,proto3" json:"created,omitempty"`
 	// @inject_tag: json:"updated" bson:"updated,omitempty" gorm:"column:updated;index:updated"
-	Updated int64 `protobuf:"varint,3,opt,name=updated,proto3" json:"updated" bson:"updated,omitempty" gorm:"column:updated;index:updated"`
+	Updated int64 `protobuf:"varint,3,opt,name=updated,proto3" json:"updated,omitempty"`
 	// @inject_tag: json:"name,omitempty" bson:"name,omitempty" gorm:"column:name"
-	Name string `protobuf:"bytes,4,opt,name=name,proto3" json:"name,omitempty" bson:"name,omitempty" gorm:"column:name"`
+	Name string `protobuf:"bytes,4,opt,name=name,proto3" json:"name,omitempty"`
 }
 
 func (x *StaffV1) Reset() {

@@ -46,6 +46,14 @@ func newLeaderBoardCmd() (result *cobra.Command, err error) {
 			if errService != nil {
 				cornerstone.Panicf(ctx, "[%s] failed to create staff v1 service, err: %+v", funcName, errService)
 			}
+			cleanUpBackgroundV1Service, errService := servicev1.NewCleanUpBackgroundV1Servicer(staffV1Repositorier, staffV1CacheRepositorier)
+			if errService != nil {
+				cornerstone.Panicf(ctx, "[%s] failed to create clean up background v1 service, err: %+v", funcName, errService)
+			}
+			errService = cleanUpBackgroundV1Service.Start(ctx)
+			if errService != nil {
+				cornerstone.Panicf(ctx, "[%s] failed to start clean up background v1 service, err: %+v", funcName, errService)
+			}
 
 			// init http server
 			ginServer := controllerv1.InitGinServer(staffV1Service)
