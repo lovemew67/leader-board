@@ -27,7 +27,7 @@ const (
 // domain and the users GID for the Group.  The meaning of id for
 // the domain Org or on non-POSIX systems is site defined.
 //
-// For a given dogithub.com/lovemew67/leader-board/id pair the same token may be returned for up to
+// For a given domain/id pair the same token may be returned for up to
 // 7 minutes and 10 seconds.
 func NewDCESecurity(domain Domain, id uint32) (UUID, error) {
 	uuid, err := NewUUID()

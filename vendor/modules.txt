@@ -7,7 +7,7 @@ github.com/fsnotify/fsnotify
 github.com/gin-contrib/cors
 # github.com/gin-contrib/sse v0.1.0
 github.com/gin-contrib/sse
-# github.com/gin-gonic/gin v1.6.3
+# github.com/gin-gonic/gin v1.7.7
 ## explicit
 github.com/gin-gonic/gin
 github.com/gin-gonic/gin/binding
@@ -19,7 +19,7 @@ github.com/go-playground/locales
 github.com/go-playground/locales/currency
 # github.com/go-playground/universal-translator v0.17.0
 github.com/go-playground/universal-translator
-# github.com/go-playground/validator/v10 v10.2.0
+# github.com/go-playground/validator/v10 v10.4.1
 github.com/go-playground/validator/v10
 # github.com/golang/mock v1.6.0
 ## explicit
@@ -27,7 +27,7 @@ github.com/golang/mock/gomock
 # github.com/golang/protobuf v1.5.2
 ## explicit
 github.com/golang/protobuf/proto
-# github.com/google/uuid v1.1.2
+# github.com/google/uuid v1.3.0
 ## explicit
 github.com/google/uuid
 # github.com/grpc-ecosystem/grpc-gateway/v2 v2.8.0
@@ -56,7 +56,7 @@ github.com/jinzhu/inflection
 github.com/json-iterator/go
 # github.com/leodido/go-urn v1.2.0
 github.com/leodido/go-urn
-# github.com/lovemew67/public-misc/cornerstone v0.0.0-20220215162018-d7af7eb811f3
+# github.com/lovemew67/public-misc/cornerstone v0.0.0-20220306135933-3b8b663f51fc
 ## explicit
 github.com/lovemew67/public-misc/cornerstone
 # github.com/magiconair/properties v1.8.5
@@ -92,7 +92,7 @@ github.com/spf13/cobra
 github.com/spf13/jwalterweatherman
 # github.com/spf13/pflag v1.0.5
 github.com/spf13/pflag
-# github.com/spf13/viper v1.10.0
+# github.com/spf13/viper v1.10.1
 ## explicit
 github.com/spf13/viper
 github.com/spf13/viper/internal/encoding
@@ -107,14 +107,17 @@ github.com/stretchr/testify/assert
 github.com/subosito/gotenv
 # github.com/ugorji/go/codec v1.1.7
 github.com/ugorji/go/codec
+# golang.org/x/crypto v0.0.0-20210817164053-32db794688a5
+golang.org/x/crypto/sha3
 # golang.org/x/sys v0.0.0-20211216021012-1d35b9e2eb4e
+golang.org/x/sys/cpu
 golang.org/x/sys/internal/unsafeheader
 golang.org/x/sys/unix
 golang.org/x/sys/windows
 # golang.org/x/text v0.3.7
 golang.org/x/text/transform
 golang.org/x/text/unicode/norm
-# google.golang.org/genproto v0.0.0-20220302033224-9aa15565e42a
+# google.golang.org/genproto v0.0.0-20220304144024-325a89244dc8
 ## explicit
 google.golang.org/genproto/googleapis/api/annotations
 # google.golang.org/protobuf v1.27.1
