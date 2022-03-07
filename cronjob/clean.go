@@ -18,7 +18,7 @@ var (
 	cleanUpCronJobEntryID = cron.EntryID(0)
 )
 
-func StartCleanUpCron(ctx cornerstone.Context, r repositoryv1.StaffV1Repository, cr repositoryv1.StaffV1CacheRepository) (err error) {
+func StartCleanUpCron(ctx cornerstone.Context, r repositoryv1.ScoreV1Repository, cr repositoryv1.ScoreV1CacheRepository) (err error) {
 	funcName := "StartCleanUpBackgroundCron"
 
 	if cleanUpCronJobEntryID != 0 {
@@ -47,6 +47,19 @@ func recoverCleanUpCronJobImpl(ctx cornerstone.Context) {
 	}
 }
 
-func cleanUpCronJobImpl(ctx cornerstone.Context, r repositoryv1.StaffV1Repository, cr repositoryv1.StaffV1CacheRepository) {
+func cleanUpCronJobImpl(ctx cornerstone.Context, r repositoryv1.ScoreV1Repository, cr repositoryv1.ScoreV1CacheRepository) {
+	funcName := "cleanUpCronJobImpl"
 	defer recoverCleanUpCronJobImpl(ctx)
+	cornerstone.Infof(ctx, "[%s] triggered", funcName)
+
+	err := r.CleanScores()
+	if err != nil {
+		cornerstone.Errorf(ctx, "[%s] failed to clean scores in reposiroty", funcName)
+		return
+	}
+
+	err = cr.CleanTopKScores()
+	if err != nil {
+		cornerstone.Errorf(ctx, "[%s] failed to clean scores in cache repository", funcName)
+	}
 }

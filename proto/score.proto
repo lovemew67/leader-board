@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package proto;
+
+option go_package = ".;proto";
+
+message ScoreV1 {
+  // @inject_tag: json:"id" bson:"id" gorm:"column:id;primary_key"
+  string id = 1;
+
+  // @inject_tag: json:"created" bson:"created" gorm:"column:created"
+  int64 created = 2;
+
+  // @inject_tag: json:"updated" bson:"updated" gorm:"column:updated"
+  int64 updated = 3;
+
+  // @inject_tag: json:"score,omitempty" bson:"score" gorm:"column:score;index:score"
+  float score = 4;
+}

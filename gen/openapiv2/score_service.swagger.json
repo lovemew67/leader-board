@@ -1,12 +1,12 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "staff_service.proto",
+    "title": "score_service.proto",
     "version": "0.1"
   },
   "tags": [
     {
-      "name": "StaffServiceV1"
+      "name": "ScoreServiceV1"
     }
   ],
   "host": "localhost:8999",
@@ -20,16 +20,16 @@
     "application/json"
   ],
   "paths": {
-    "/v1/staff": {
+    "/v1/scores": {
       "get": {
-        "summary": "List staff",
-        "description": "List all staff on the server.",
-        "operationId": "StaffServiceV1_ListStaffV1",
+        "summary": "List top k highest score client",
+        "description": "List top k highest score client on the server",
+        "operationId": "ScoreServiceV1_ListTopKScores",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/protoListStaffV1OutterResponse"
+              "$ref": "#/definitions/protoListTopKScoresV1OutterResponse"
             }
           },
           "default": {
@@ -40,18 +40,18 @@
           }
         },
         "tags": [
-          "StaffServiceV1"
+          "ScoreServiceV1"
         ]
       },
       "post": {
-        "summary": "Add a staff",
-        "description": "Add a staff to the server.",
-        "operationId": "StaffServiceV1_CreateStaffV1",
+        "summary": "Insert a client score",
+        "description": "Insert a client score to the server.",
+        "operationId": "ScoreServiceV1_InsertScoreV1",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/protoCreateStaffV1Response"
+              "$ref": "#/definitions/protoInsertScoreV1Response"
             }
           },
           "default": {
@@ -67,49 +67,45 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/protoStaffV1"
+              "$ref": "#/definitions/protoScoreV1"
             }
           }
         ],
         "tags": [
-          "StaffServiceV1"
+          "ScoreServiceV1"
         ]
       }
     }
   },
   "definitions": {
-    "protoCreateStaffV1Response": {
+    "protoInsertScoreV1Response": {
       "type": "object",
       "properties": {
         "result": {
-          "$ref": "#/definitions/protoStaffV1"
+          "$ref": "#/definitions/protoScoreV1"
         }
       }
     },
-    "protoListStaffV1InnerResponse": {
+    "protoListTopKScoresV1InnerResponse": {
       "type": "object",
       "properties": {
-        "staff": {
+        "scores": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/protoStaffV1"
+            "$ref": "#/definitions/protoScoreV1"
           }
-        },
-        "total": {
-          "type": "integer",
-          "format": "int32"
         }
       }
     },
-    "protoListStaffV1OutterResponse": {
+    "protoListTopKScoresV1OutterResponse": {
       "type": "object",
       "properties": {
         "result": {
-          "$ref": "#/definitions/protoListStaffV1InnerResponse"
+          "$ref": "#/definitions/protoListTopKScoresV1InnerResponse"
         }
       }
     },
-    "protoStaffV1": {
+    "protoScoreV1": {
       "type": "object",
       "properties": {
         "id": {
@@ -119,16 +115,17 @@
         "created": {
           "type": "string",
           "format": "int64",
-          "title": "@inject_tag: json:\"created\" bson:\"created,omitempty\" gorm:\"column:created\""
+          "title": "@inject_tag: json:\"created\" bson:\"created\" gorm:\"column:created\""
         },
         "updated": {
           "type": "string",
           "format": "int64",
-          "title": "@inject_tag: json:\"updated\" bson:\"updated,omitempty\" gorm:\"column:updated;index:updated\""
+          "title": "@inject_tag: json:\"updated\" bson:\"updated\" gorm:\"column:updated\""
         },
-        "name": {
-          "type": "string",
-          "title": "@inject_tag: json:\"name,omitempty\" bson:\"name,omitempty\" gorm:\"column:name\""
+        "score": {
+          "type": "number",
+          "format": "float",
+          "title": "@inject_tag: json:\"score,omitempty\" bson:\"score\" gorm:\"column:score;index:score\""
         }
       }
     },

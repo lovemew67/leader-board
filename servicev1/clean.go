@@ -11,8 +11,8 @@ var (
 )
 
 type CleanUpBackgroundCronjobdV1Servicer struct {
-	r  repositoryv1.StaffV1Repository
-	cr repositoryv1.StaffV1CacheRepository
+	r  repositoryv1.ScoreV1Repository
+	cr repositoryv1.ScoreV1CacheRepository
 }
 
 func (s *CleanUpBackgroundCronjobdV1Servicer) Start(ctx cornerstone.Context) (err error) {
@@ -20,7 +20,7 @@ func (s *CleanUpBackgroundCronjobdV1Servicer) Start(ctx cornerstone.Context) (er
 	return
 }
 
-func NewCleanUpBackgroundV1Servicer(_r repositoryv1.StaffV1Repository, _cr repositoryv1.StaffV1CacheRepository) (result *CleanUpBackgroundCronjobdV1Servicer, err error) {
+func NewCleanUpBackgroundV1Servicer(_r repositoryv1.ScoreV1Repository, _cr repositoryv1.ScoreV1CacheRepository) (result *CleanUpBackgroundCronjobdV1Servicer, err error) {
 	result = &CleanUpBackgroundCronjobdV1Servicer{
 		r:  _r,
 		cr: _cr,

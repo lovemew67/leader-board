@@ -33,7 +33,7 @@ genproto:
 	./proto/*.proto
 
 injecttag:
-	protoc-go-inject-tag -input=./gen/go/proto/staff.pb.go
+	protoc-go-inject-tag -input=./gen/go/proto/score.pb.go
 
 genall: genproto injecttag
 
@@ -42,7 +42,7 @@ mock:
 
 swaggerui:
 	docker run --rm --name swaggerui -p 8080:8080 \
-	-v $(THISDIR)gen/openapiv2/staff_service.swagger.json:/app/swagger.json \
+	-v $(THISDIR)gen/openapiv2/score_service.swagger.json:/app/swagger.json \
 	swaggerapi/swagger-ui:v3.37.2
 
 updatevendor:

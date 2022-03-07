@@ -30,11 +30,11 @@ func newLeaderBoardCmd() (result *cobra.Command, err error) {
 			ctx := cornerstone.NewContext()
 
 			// init repository
-			staffV1Repositorier, errRepository := sqlite.NewStaffV1SQLiteRepositorier(ctx)
+			ScoreV1Repositorier, errRepository := sqlite.NewScoreV1SQLiteRepositorier(ctx)
 			if errRepository != nil {
 				cornerstone.Panicf(ctx, "[%s] failed to create staff v1 repositiory, err: %+v", funcName, errRepository)
 			}
-			staffV1CacheRepositorier, errRepository := redis.NewStaffV1RedisCacheRepositorier(ctx, &conredis.Config{
+			ScoreV1CacheRepositorier, errRepository := redis.NewScoreV1RedisCacheRepositorier(ctx, &conredis.Config{
 				Host: "localhost:6379",
 			})
 			if errRepository != nil {
@@ -42,11 +42,11 @@ func newLeaderBoardCmd() (result *cobra.Command, err error) {
 			}
 
 			// init service
-			staffV1Service, errService := servicev1.NewStaffV1Servicer(staffV1Repositorier, staffV1CacheRepositorier)
+			ScoreV1Service, errService := servicev1.NewScoreV1Servicer(ScoreV1Repositorier, ScoreV1CacheRepositorier)
 			if errService != nil {
 				cornerstone.Panicf(ctx, "[%s] failed to create staff v1 service, err: %+v", funcName, errService)
 			}
-			cleanUpBackgroundV1Service, errService := servicev1.NewCleanUpBackgroundV1Servicer(staffV1Repositorier, staffV1CacheRepositorier)
+			cleanUpBackgroundV1Service, errService := servicev1.NewCleanUpBackgroundV1Servicer(ScoreV1Repositorier, ScoreV1CacheRepositorier)
 			if errService != nil {
 				cornerstone.Panicf(ctx, "[%s] failed to create clean up background v1 service, err: %+v", funcName, errService)
 			}
@@ -56,7 +56,7 @@ func newLeaderBoardCmd() (result *cobra.Command, err error) {
 			}
 
 			// init http server
-			ginServer := controllerv1.InitGinServer(staffV1Service)
+			ginServer := controllerv1.InitGinServer(ScoreV1Service)
 			ginCanceller := controllerv1.HTTPListenAndServe(ctx, ginServer)
 			defer ginCanceller()
 

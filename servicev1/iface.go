@@ -6,9 +6,9 @@ import (
 	"github.com/lovemew67/public-misc/cornerstone"
 )
 
-type StaffV1Service interface {
-	CreateStaffV1Service(*domainv1.CreateStaffV1ServiceRequest) (*proto.StaffV1, error)
-	ListStaffV1Service(*domainv1.ListStaffV1ServiceRequest) ([]*proto.StaffV1, int, error)
+type ScoreV1Service interface {
+	InsertScoreV1Service(*domainv1.InsertScoreV1ServiceRequest) (*proto.ScoreV1, error)
+	ListTopKScoresV1Service(*domainv1.ListTopKScoresV1ServiceRequest) ([]*proto.ScoreV1, error)
 }
 
 type CleanUpBackgroundV1Service interface {

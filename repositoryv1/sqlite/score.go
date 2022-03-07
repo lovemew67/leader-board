@@ -4,23 +4,23 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/jinzhu/gorm"
 	"github.com/lovemew67/leader-board/gen/go/proto"
 	"github.com/lovemew67/leader-board/repositoryv1"
-
-	"github.com/google/uuid"
-	"github.com/jinzhu/gorm"
 	"github.com/lovemew67/public-misc/cornerstone"
 )
 
-var (
-	_ repositoryv1.StaffV1Repository = &StaffV1SQLiteRepositorier{}
+const (
+	scoreV1TableName = "score_v1"
 )
 
-type StaffV1SQLiteRepositorier struct{}
+var (
+	_ repositoryv1.ScoreV1Repository = &ScoreV1SQLiteRepositorier{}
+)
 
-func (s *StaffV1SQLiteRepositorier) CreateStaff(staff *proto.StaffV1) (result *proto.StaffV1, err error) {
-	id := uuid.New().String()
-	staff.Id = id
+type ScoreV1SQLiteRepositorier struct{}
+
+func (s *ScoreV1SQLiteRepositorier) InsertScore(staff *proto.ScoreV1) (result *proto.ScoreV1, err error) {
 	now := time.Now().UnixNano()
 	staff.Created = now
 	staff.Updated = now
@@ -31,20 +31,12 @@ func (s *StaffV1SQLiteRepositorier) CreateStaff(staff *proto.StaffV1) (result *p
 		return
 	}
 
-	result, err = s.GetStaff(id)
+	result, err = s.getScore(staff.Id)
 	return
 }
 
-func (s *StaffV1SQLiteRepositorier) CountTotalStaff() (result int, err error) {
-	db := sqlitedb
-	db = db.Model(proto.StaffV1{})
-	db = db.Count(&result)
-	err = db.Error
-	return
-}
-
-func (s *StaffV1SQLiteRepositorier) GetStaff(id string) (staff *proto.StaffV1, err error) {
-	staffList := make([]*proto.StaffV1, 1)
+func (s *ScoreV1SQLiteRepositorier) getScore(id string) (staff *proto.ScoreV1, err error) {
+	staffList := make([]*proto.ScoreV1, 1)
 	db := sqlitedb
 	db = db.Where("id = ?", id)
 	db = db.Limit(1)
@@ -58,18 +50,26 @@ func (s *StaffV1SQLiteRepositorier) GetStaff(id string) (staff *proto.StaffV1, e
 	return
 }
 
-func (s *StaffV1SQLiteRepositorier) QueryAllStaffWithOffsetAndLimit(offset, limit int) (staffList []*proto.StaffV1, err error) {
-	staffList = make([]*proto.StaffV1, limit)
+func (s *ScoreV1SQLiteRepositorier) ListTopKHighestScores(limit int) (scoreList []*proto.ScoreV1, err error) {
+	scoreList = make([]*proto.ScoreV1, limit)
 	db := sqlitedb
-	db = db.Offset(offset)
+	db = db.Order("score DESC")
 	db = db.Limit(limit)
-	db = db.Find(&staffList)
+	db = db.Find(&scoreList)
 	err = db.Error
 	return
 }
 
-func NewStaffV1SQLiteRepositorier(ctx cornerstone.Context) (result *StaffV1SQLiteRepositorier, err error) {
-	funcName := "NewStaffV1SQLiteRepositorier"
+func (s *ScoreV1SQLiteRepositorier) CleanScores() (err error) {
+	db := sqlitedb
+	db = db.Where("1 = 1")
+	db = db.Delete(&proto.ScoreV1{})
+	err = db.Error
+	return
+}
+
+func NewScoreV1SQLiteRepositorier(ctx cornerstone.Context) (result *ScoreV1SQLiteRepositorier, err error) {
+	funcName := "NewScoreV1SQLiteRepositorier"
 
 	dbFilePath := fmt.Sprintf(formatSqliteDatabasePath, dataFolder)
 	if err = createDirIfNotExist(ctx, dataFolder); err != nil {
@@ -85,10 +85,10 @@ func NewStaffV1SQLiteRepositorier(ctx cornerstone.Context) (result *StaffV1SQLit
 	}
 	sqlitedb = db
 
-	staff := &proto.StaffV1{}
+	staff := &proto.ScoreV1{}
 	if hasTable := sqlitedb.HasTable(staff); hasTable {
 		cornerstone.Infof(ctx, "[%s] continue to reuse the table: %s", funcName, scoreV1TableName)
-		db.AutoMigrate(&proto.StaffV1{})
+		db.AutoMigrate(&proto.ScoreV1{})
 		return
 	}
 
@@ -96,6 +96,6 @@ func NewStaffV1SQLiteRepositorier(ctx cornerstone.Context) (result *StaffV1SQLit
 		return
 	}
 
-	result = &StaffV1SQLiteRepositorier{}
+	result = &ScoreV1SQLiteRepositorier{}
 	return
 }

@@ -29,9 +29,6 @@ github.com/golang/mock/gomock
 github.com/golang/protobuf/proto
 # github.com/gomodule/redigo v1.8.8
 github.com/gomodule/redigo/redis
-# github.com/google/uuid v1.3.0
-## explicit
-github.com/google/uuid
 # github.com/grpc-ecosystem/grpc-gateway/v2 v2.8.0
 ## explicit
 github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2/options

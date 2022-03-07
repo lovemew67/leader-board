@@ -10,58 +10,95 @@ import (
 	gomock "github.com/golang/mock/gomock"
 	domainv1 "github.com/lovemew67/leader-board/domainv1"
 	proto "github.com/lovemew67/leader-board/gen/go/proto"
+	cornerstone "github.com/lovemew67/public-misc/cornerstone"
 )
 
-// MockStaffV1Service is a mock of StaffV1Service interface.
-type MockStaffV1Service struct {
+// MockScoreV1Service is a mock of ScoreV1Service interface.
+type MockScoreV1Service struct {
 	ctrl     *gomock.Controller
-	recorder *MockStaffV1ServiceMockRecorder
+	recorder *MockScoreV1ServiceMockRecorder
 }
 
-// MockStaffV1ServiceMockRecorder is the mock recorder for MockStaffV1Service.
-type MockStaffV1ServiceMockRecorder struct {
-	mock *MockStaffV1Service
+// MockScoreV1ServiceMockRecorder is the mock recorder for MockScoreV1Service.
+type MockScoreV1ServiceMockRecorder struct {
+	mock *MockScoreV1Service
 }
 
-// NewMockStaffV1Service creates a new mock instance.
-func NewMockStaffV1Service(ctrl *gomock.Controller) *MockStaffV1Service {
-	mock := &MockStaffV1Service{ctrl: ctrl}
-	mock.recorder = &MockStaffV1ServiceMockRecorder{mock}
+// NewMockScoreV1Service creates a new mock instance.
+func NewMockScoreV1Service(ctrl *gomock.Controller) *MockScoreV1Service {
+	mock := &MockScoreV1Service{ctrl: ctrl}
+	mock.recorder = &MockScoreV1ServiceMockRecorder{mock}
 	return mock
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
-func (m *MockStaffV1Service) EXPECT() *MockStaffV1ServiceMockRecorder {
+func (m *MockScoreV1Service) EXPECT() *MockScoreV1ServiceMockRecorder {
 	return m.recorder
 }
 
-// CreateStaffV1Service mocks base method.
-func (m *MockStaffV1Service) CreateStaffV1Service(arg0 *domainv1.CreateStaffV1ServiceRequest) (*proto.StaffV1, error) {
+// InsertScoreV1Service mocks base method.
+func (m *MockScoreV1Service) InsertScoreV1Service(arg0 *domainv1.InsertScoreV1ServiceRequest) (*proto.ScoreV1, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "CreateStaffV1Service", arg0)
-	ret0, _ := ret[0].(*proto.StaffV1)
+	ret := m.ctrl.Call(m, "InsertScoreV1Service", arg0)
+	ret0, _ := ret[0].(*proto.ScoreV1)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// CreateStaffV1Service indicates an expected call of CreateStaffV1Service.
-func (mr *MockStaffV1ServiceMockRecorder) CreateStaffV1Service(arg0 interface{}) *gomock.Call {
+// InsertScoreV1Service indicates an expected call of InsertScoreV1Service.
+func (mr *MockScoreV1ServiceMockRecorder) InsertScoreV1Service(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateStaffV1Service", reflect.TypeOf((*MockStaffV1Service)(nil).CreateStaffV1Service), arg0)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "InsertScoreV1Service", reflect.TypeOf((*MockScoreV1Service)(nil).InsertScoreV1Service), arg0)
 }
 
-// ListStaffV1Service mocks base method.
-func (m *MockStaffV1Service) ListStaffV1Service(arg0 *domainv1.ListStaffV1ServiceRequest) ([]*proto.StaffV1, int, error) {
+// ListTopKScoresV1Service mocks base method.
+func (m *MockScoreV1Service) ListTopKScoresV1Service(arg0 *domainv1.ListTopKScoresV1ServiceRequest) ([]*proto.ScoreV1, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ListStaffV1Service", arg0)
-	ret0, _ := ret[0].([]*proto.StaffV1)
-	ret1, _ := ret[1].(int)
-	ret2, _ := ret[2].(error)
-	return ret0, ret1, ret2
+	ret := m.ctrl.Call(m, "ListTopKScoresV1Service", arg0)
+	ret0, _ := ret[0].([]*proto.ScoreV1)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
 }
 
-// ListStaffV1Service indicates an expected call of ListStaffV1Service.
-func (mr *MockStaffV1ServiceMockRecorder) ListStaffV1Service(arg0 interface{}) *gomock.Call {
+// ListTopKScoresV1Service indicates an expected call of ListTopKScoresV1Service.
+func (mr *MockScoreV1ServiceMockRecorder) ListTopKScoresV1Service(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListStaffV1Service", reflect.TypeOf((*MockStaffV1Service)(nil).ListStaffV1Service), arg0)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListTopKScoresV1Service", reflect.TypeOf((*MockScoreV1Service)(nil).ListTopKScoresV1Service), arg0)
+}
+
+// MockCleanUpBackgroundV1Service is a mock of CleanUpBackgroundV1Service interface.
+type MockCleanUpBackgroundV1Service struct {
+	ctrl     *gomock.Controller
+	recorder *MockCleanUpBackgroundV1ServiceMockRecorder
+}
+
+// MockCleanUpBackgroundV1ServiceMockRecorder is the mock recorder for MockCleanUpBackgroundV1Service.
+type MockCleanUpBackgroundV1ServiceMockRecorder struct {
+	mock *MockCleanUpBackgroundV1Service
+}
+
+// NewMockCleanUpBackgroundV1Service creates a new mock instance.
+func NewMockCleanUpBackgroundV1Service(ctrl *gomock.Controller) *MockCleanUpBackgroundV1Service {
+	mock := &MockCleanUpBackgroundV1Service{ctrl: ctrl}
+	mock.recorder = &MockCleanUpBackgroundV1ServiceMockRecorder{mock}
+	return mock
+}
+
+// EXPECT returns an object that allows the caller to indicate expected use.
+func (m *MockCleanUpBackgroundV1Service) EXPECT() *MockCleanUpBackgroundV1ServiceMockRecorder {
+	return m.recorder
+}
+
+// Start mocks base method.
+func (m *MockCleanUpBackgroundV1Service) Start(arg0 cornerstone.Context) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Start", arg0)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// Start indicates an expected call of Start.
+func (mr *MockCleanUpBackgroundV1ServiceMockRecorder) Start(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Start", reflect.TypeOf((*MockCleanUpBackgroundV1Service)(nil).Start), arg0)
 }

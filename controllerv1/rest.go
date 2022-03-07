@@ -7,11 +7,11 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/lovemew67/leader-board/domainv1"
-	"github.com/lovemew67/leader-board/servicev1"
-
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
+	"github.com/lovemew67/leader-board/domainv1"
+	"github.com/lovemew67/leader-board/lb"
+	"github.com/lovemew67/leader-board/servicev1"
 	"github.com/lovemew67/public-misc/cornerstone"
 	"github.com/spf13/viper"
 )
@@ -20,7 +20,7 @@ type middlewareResponse struct {
 	ErrorMessage string `json:"error_message,omitempty"`
 }
 
-func InitGinServer(_ss servicev1.StaffV1Service) (gs *GinServer) {
+func InitGinServer(_ss servicev1.ScoreV1Service) (gs *GinServer) {
 	// create gin server.
 	gin.SetMode(viper.GetString("rest.mode"))
 	gs = &GinServer{
@@ -63,7 +63,7 @@ func HTTPListenAndServe(ctx cornerstone.Context, gs *GinServer) (canceller func(
 }
 
 type GinServer struct {
-	ss servicev1.StaffV1Service
+	ss servicev1.ScoreV1Service
 
 	*gin.Engine
 }
@@ -138,10 +138,10 @@ func (gs *GinServer) initRoutings() {
 	}
 
 	// add staff v1 handlers
-	staffGroup := rootGroup.Group("/v1/staff")
+	staffGroup := rootGroup.Group("/v1/scores")
 	{
-		staffGroup.GET("", gs.listStaffV1Handler)
-		staffGroup.POST("", gs.createStaffV1Handler)
+		staffGroup.GET("", gs.listTopKScoresV1Handler)
+		staffGroup.POST("", gs.insertScoreV1Handler)
 		staffGroup.PATCH("", gs.panicTester)
 
 		staffGroup.OPTIONS("")
@@ -158,13 +158,13 @@ func (gs *GinServer) config(c *gin.Context) {
 
 // staff v1 handlers
 
-func (gs *GinServer) createStaffV1Handler(c *gin.Context) {
-	input := &domainv1.CreateStaffV1ServiceRequest{}
+func (gs *GinServer) insertScoreV1Handler(c *gin.Context) {
+	input := &domainv1.InsertScoreV1ServiceRequest{}
 	if errBind := c.ShouldBindJSON(input); errBind != nil {
 		cornerstone.FromCodeErrorWithStatus(c, cornerstone.FromNativeError(errBind))
 		return
 	}
-	result, err := gs.ss.CreateStaffV1Service(input)
+	result, err := gs.ss.InsertScoreV1Service(input)
 	if err != nil {
 		cornerstone.FromCodeErrorWithStatus(c, cornerstone.FromNativeError(err))
 		return
@@ -172,26 +172,25 @@ func (gs *GinServer) createStaffV1Handler(c *gin.Context) {
 	cornerstone.DoneWithStatus(c, result)
 }
 
-func (gs *GinServer) listStaffV1Handler(c *gin.Context) {
-	input := &domainv1.ListStaffV1ServiceRequest{}
+func (gs *GinServer) listTopKScoresV1Handler(c *gin.Context) {
+	input := &domainv1.ListTopKScoresV1ServiceRequest{}
 	if errBind := c.BindQuery(&input); errBind != nil {
 		cornerstone.FromCodeErrorWithStatus(c, cornerstone.FromNativeError(errBind))
 		return
 	}
 	if input.Limit <= 0 {
-		input.Limit = 10
+		input.Limit = lb.DefaultMaxLengthInt
 	}
-	if input.Limit > 200 {
-		input.Limit = 200
+	if input.Limit > lb.DefaultMaxLengthInt {
+		input.Limit = lb.DefaultMaxLengthInt
 	}
-	results, total, err := gs.ss.ListStaffV1Service(input)
+	results, err := gs.ss.ListTopKScoresV1Service(input)
 	if err != nil {
 		cornerstone.FromCodeErrorWithStatus(c, cornerstone.FromNativeError(err))
 		return
 	}
 	cornerstone.DoneWithStatus(c, gin.H{
-		"staff": results,
-		"total": total,
+		"scores": results,
 	})
 }
 

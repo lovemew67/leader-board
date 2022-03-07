@@ -12,10 +12,6 @@ const (
 )
 
 const (
-	scoreV1TableName = "score_v1"
-)
-
-const (
 	dataFolder               = "./data"
 	formatSqliteDatabasePath = "%s/db.sqlite"
 )
