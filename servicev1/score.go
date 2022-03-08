@@ -19,7 +19,7 @@ type ScoreV1Servicer struct {
 	cr repositoryv1.ScoreV1CacheRepository
 }
 
-func (s *ScoreV1Servicer) InsertScoreV1Service(req *domainv1.InsertScoreV1ServiceRequest) (result *proto.ScoreV1, err error) {
+func (s *ScoreV1Servicer) InsertScoreV1Service(ctx cornerstone.Context, req *domainv1.InsertScoreV1ServiceRequest) (result *proto.ScoreV1, err error) {
 	if req.Id == "" {
 		err = fmt.Errorf("empty id")
 		return
@@ -36,7 +36,7 @@ func (s *ScoreV1Servicer) InsertScoreV1Service(req *domainv1.InsertScoreV1Servic
 	return
 }
 
-func (s *ScoreV1Servicer) ListTopKScoresV1Service(req *domainv1.ListTopKScoresV1ServiceRequest) (results []*proto.ScoreV1, err error) {
+func (s *ScoreV1Servicer) ListTopKScoresV1Service(ctx cornerstone.Context, req *domainv1.ListTopKScoresV1ServiceRequest) (results []*proto.ScoreV1, err error) {
 	if req.Limit <= 0 {
 		req.Limit = lb.DefaultMaxLengthInt
 	}

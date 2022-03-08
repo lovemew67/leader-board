@@ -50,8 +50,10 @@ updatevendor:
 	go mod vendor
 	go vet ./...
 
-test: updatevendor	
-	go test -mod=vendor -race -cover -timeout 180s ./...
+test: updatevendor
+	# https://github.com/golang/go/issues/41572
+	# https://github.com/golang/go/issues/49138
+	MallocNanoZone=0 go test -mod=vendor -race -cover -timeout 180s ./...
 
 install: updatevendor
 	go install -mod=vendor -v -ldflags "-s -X $(PKGPATH).appName=$(APP) -X $(PKGPATH).gitCommit=$(REVISION) -X $(PKGPATH).gitBranch=$(BR) -X $(PKGPATH).appVersion=$(TAG) -X $(PKGPATH).buildDate=$(DATE)" $(SOURCE) 

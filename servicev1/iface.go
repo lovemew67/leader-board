@@ -7,8 +7,8 @@ import (
 )
 
 type ScoreV1Service interface {
-	InsertScoreV1Service(*domainv1.InsertScoreV1ServiceRequest) (*proto.ScoreV1, error)
-	ListTopKScoresV1Service(*domainv1.ListTopKScoresV1ServiceRequest) ([]*proto.ScoreV1, error)
+	InsertScoreV1Service(cornerstone.Context, *domainv1.InsertScoreV1ServiceRequest) (*proto.ScoreV1, error)
+	ListTopKScoresV1Service(cornerstone.Context, *domainv1.ListTopKScoresV1ServiceRequest) ([]*proto.ScoreV1, error)
 }
 
 type CleanUpBackgroundV1Service interface {

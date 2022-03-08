@@ -163,7 +163,7 @@ func (gs *GinServer) insertScoreV1Handler(c *gin.Context) {
 		cornerstone.FromCodeErrorWithStatus(c, cornerstone.FromNativeError(errBind))
 		return
 	}
-	result, err := gs.ss.InsertScoreV1Service(input)
+	result, err := gs.ss.InsertScoreV1Service(cornerstone.NewContext(), input)
 	if err != nil {
 		cornerstone.FromCodeErrorWithStatus(c, cornerstone.FromNativeError(err))
 		return
@@ -177,7 +177,7 @@ func (gs *GinServer) listTopKScoresV1Handler(c *gin.Context) {
 		cornerstone.FromCodeErrorWithStatus(c, cornerstone.FromNativeError(errBind))
 		return
 	}
-	results, err := gs.ss.ListTopKScoresV1Service(input)
+	results, err := gs.ss.ListTopKScoresV1Service(cornerstone.NewContext(), input)
 	if err != nil {
 		cornerstone.FromCodeErrorWithStatus(c, cornerstone.FromNativeError(err))
 		return

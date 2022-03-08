@@ -37,33 +37,33 @@ func (m *MockScoreV1Service) EXPECT() *MockScoreV1ServiceMockRecorder {
 }
 
 // InsertScoreV1Service mocks base method.
-func (m *MockScoreV1Service) InsertScoreV1Service(arg0 *domainv1.InsertScoreV1ServiceRequest) (*proto.ScoreV1, error) {
+func (m *MockScoreV1Service) InsertScoreV1Service(arg0 cornerstone.Context, arg1 *domainv1.InsertScoreV1ServiceRequest) (*proto.ScoreV1, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "InsertScoreV1Service", arg0)
+	ret := m.ctrl.Call(m, "InsertScoreV1Service", arg0, arg1)
 	ret0, _ := ret[0].(*proto.ScoreV1)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // InsertScoreV1Service indicates an expected call of InsertScoreV1Service.
-func (mr *MockScoreV1ServiceMockRecorder) InsertScoreV1Service(arg0 interface{}) *gomock.Call {
+func (mr *MockScoreV1ServiceMockRecorder) InsertScoreV1Service(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "InsertScoreV1Service", reflect.TypeOf((*MockScoreV1Service)(nil).InsertScoreV1Service), arg0)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "InsertScoreV1Service", reflect.TypeOf((*MockScoreV1Service)(nil).InsertScoreV1Service), arg0, arg1)
 }
 
 // ListTopKScoresV1Service mocks base method.
-func (m *MockScoreV1Service) ListTopKScoresV1Service(arg0 *domainv1.ListTopKScoresV1ServiceRequest) ([]*proto.ScoreV1, error) {
+func (m *MockScoreV1Service) ListTopKScoresV1Service(arg0 cornerstone.Context, arg1 *domainv1.ListTopKScoresV1ServiceRequest) ([]*proto.ScoreV1, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ListTopKScoresV1Service", arg0)
+	ret := m.ctrl.Call(m, "ListTopKScoresV1Service", arg0, arg1)
 	ret0, _ := ret[0].([]*proto.ScoreV1)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // ListTopKScoresV1Service indicates an expected call of ListTopKScoresV1Service.
-func (mr *MockScoreV1ServiceMockRecorder) ListTopKScoresV1Service(arg0 interface{}) *gomock.Call {
+func (mr *MockScoreV1ServiceMockRecorder) ListTopKScoresV1Service(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListTopKScoresV1Service", reflect.TypeOf((*MockScoreV1Service)(nil).ListTopKScoresV1Service), arg0)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListTopKScoresV1Service", reflect.TypeOf((*MockScoreV1Service)(nil).ListTopKScoresV1Service), arg0, arg1)
 }
 
 // MockCleanUpBackgroundV1Service is a mock of CleanUpBackgroundV1Service interface.

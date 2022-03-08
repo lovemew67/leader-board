@@ -27,7 +27,7 @@ func Test_InsertScoreV1Service(t *testing.T) {
 	req := &domainv1.InsertScoreV1ServiceRequest{
 		ScoreV1: &proto.ScoreV1{},
 	}
-	result, err := scoreV1Servicer.InsertScoreV1Service(req)
+	result, err := scoreV1Servicer.InsertScoreV1Service(ctx, req)
 	assert.Error(t, err)
 	assert.Nil(t, result)
 
@@ -36,7 +36,7 @@ func Test_InsertScoreV1Service(t *testing.T) {
 			Id: "id",
 		},
 	}
-	result, err = scoreV1Servicer.InsertScoreV1Service(req)
+	result, err = scoreV1Servicer.InsertScoreV1Service(ctx, req)
 	assert.Error(t, err)
 	assert.Nil(t, result)
 
@@ -46,7 +46,7 @@ func Test_InsertScoreV1Service(t *testing.T) {
 			Score: 1,
 		},
 	}
-	result, err = scoreV1Servicer.InsertScoreV1Service(req)
+	result, err = scoreV1Servicer.InsertScoreV1Service(ctx, req)
 	assert.NoError(t, err)
 	assert.NotNil(t, result)
 }
@@ -69,7 +69,7 @@ func Test_ListTopKScoresV1Service_CacheHitWithoutLimit(t *testing.T) {
 	assert.NoError(t, err)
 
 	req := &domainv1.ListTopKScoresV1ServiceRequest{}
-	result, err := scoreV1Servicer.ListTopKScoresV1Service(req)
+	result, err := scoreV1Servicer.ListTopKScoresV1Service(ctx, req)
 	assert.NoError(t, err)
 	assert.NotNil(t, result)
 	assert.Equal(t, lb.DefaultMaxLengthInt, len(result))
@@ -95,7 +95,7 @@ func Test_ListTopKScoresV1Service_CacheHitWithLimit(t *testing.T) {
 	req := &domainv1.ListTopKScoresV1ServiceRequest{
 		Limit: 5,
 	}
-	result, err := scoreV1Servicer.ListTopKScoresV1Service(req)
+	result, err := scoreV1Servicer.ListTopKScoresV1Service(ctx, req)
 	assert.NoError(t, err)
 	assert.NotNil(t, result)
 	assert.Equal(t, 5, len(result))
@@ -103,7 +103,7 @@ func Test_ListTopKScoresV1Service_CacheHitWithLimit(t *testing.T) {
 	req = &domainv1.ListTopKScoresV1ServiceRequest{
 		Limit: 2 * lb.DefaultMaxLengthInt,
 	}
-	result, err = scoreV1Servicer.ListTopKScoresV1Service(req)
+	result, err = scoreV1Servicer.ListTopKScoresV1Service(ctx, req)
 	assert.NoError(t, err)
 	assert.NotNil(t, result)
 	assert.Equal(t, lb.DefaultMaxLengthInt, len(result))
@@ -131,7 +131,7 @@ func Test_ListTopKScoresV1Service_CacheMissWithLimitLess(t *testing.T) {
 	req := &domainv1.ListTopKScoresV1ServiceRequest{
 		Limit: 5,
 	}
-	result, err := scoreV1Servicer.ListTopKScoresV1Service(req)
+	result, err := scoreV1Servicer.ListTopKScoresV1Service(ctx, req)
 	assert.NoError(t, err)
 	assert.NotNil(t, result)
 	assert.Equal(t, 5, len(result))
@@ -159,7 +159,7 @@ func Test_ListTopKScoresV1Service_CacheMissWithLimitMore(t *testing.T) {
 	req := &domainv1.ListTopKScoresV1ServiceRequest{
 		Limit: 2 * lb.DefaultMaxLengthInt,
 	}
-	result, err := scoreV1Servicer.ListTopKScoresV1Service(req)
+	result, err := scoreV1Servicer.ListTopKScoresV1Service(ctx, req)
 	assert.NoError(t, err)
 	assert.NotNil(t, result)
 	assert.Equal(t, lb.DefaultMaxLengthInt, len(result))
