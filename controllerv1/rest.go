@@ -192,7 +192,7 @@ func (gs *GinServer) listTopKScoresV1Handler(c *gin.Context) {
 		cornerstone.FromCodeErrorWithStatus(c, cornerstone.FromNativeError(errBind))
 		return
 	}
-	results, err := gs.ss.ListTopKScoresV1Service(cornerstone.NewContext(), input)
+	results, err := gs.ss.ListTopKScoresV1Service(ctx, input)
 	if err != nil {
 		cornerstone.Errorf(ctx, "[%s] list top k scores v1 service failed, err: %+v", funcName, err)
 		cornerstone.FromCodeErrorWithStatus(c, cornerstone.FromNativeError(err))

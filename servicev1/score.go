@@ -29,12 +29,12 @@ func (s *ScoreV1Servicer) InsertScoreV1Service(ctx cornerstone.Context, req *dom
 		err = fmt.Errorf("zero score")
 		return
 	}
-	result, err = s.r.InsertScore(cornerstone.NewContext(), req.ScoreV1)
+	result, err = s.r.InsertScore(ctx, req.ScoreV1)
 	if err != nil {
 		return
 	}
 	cornerstone.Debugf(ctx, "[%s] inserted score: %f, id: %s", funcName, req.Score, req.Id)
-	err = s.cr.CleanTopKScores(cornerstone.NewContext())
+	err = s.cr.CleanTopKScores(ctx)
 	return
 }
 
@@ -46,7 +46,7 @@ func (s *ScoreV1Servicer) ListTopKScoresV1Service(ctx cornerstone.Context, req *
 	if req.Limit > lb.DefaultMaxLengthInt {
 		req.Limit = lb.DefaultMaxLengthInt
 	}
-	results, err = s.cr.GetTopKScores(cornerstone.NewContext())
+	results, err = s.cr.GetTopKScores(ctx)
 	if err == nil {
 		cornerstone.Debugf(ctx, "[%s] cache hit", funcName)
 		if len(results) >= req.Limit {
@@ -55,12 +55,12 @@ func (s *ScoreV1Servicer) ListTopKScoresV1Service(ctx cornerstone.Context, req *
 	} else {
 		if err == lb.ErrRedisKeyNotFound {
 			cornerstone.Debugf(ctx, "[%s] cache miss", funcName)
-			results, err = s.r.ListTopKHighestScores(cornerstone.NewContext(), lb.DefaultMaxLengthInt)
+			results, err = s.r.ListTopKHighestScores(ctx, lb.DefaultMaxLengthInt)
 			if err != nil {
 				return
 			}
 			cornerstone.Debugf(ctx, "[%s] got top k highest scores from databse", funcName)
-			err = s.cr.SetTopKScores(cornerstone.NewContext(), results)
+			err = s.cr.SetTopKScores(ctx, results)
 			if err != nil {
 				return
 			}

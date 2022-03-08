@@ -14,6 +14,10 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+var (
+	ctx = cornerstone.NewContext()
+)
+
 func beforeTest() {}
 
 func TestMain(m *testing.M) {
@@ -30,8 +34,6 @@ func afterTest() {
 }
 
 func Test_All(t *testing.T) {
-	ctx := cornerstone.NewContext()
-
 	// test: init repo
 	_, err := NewScoreV1SQLiteRepositorier(ctx)
 	assert.NoError(t, err)
