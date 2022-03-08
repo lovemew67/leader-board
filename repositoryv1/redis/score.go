@@ -1,7 +1,10 @@
 package redis
 
 import (
+	goproto "google.golang.org/protobuf/proto"
+
 	"github.com/lovemew67/leader-board/gen/go/proto"
+	"github.com/lovemew67/leader-board/lb"
 	"github.com/lovemew67/leader-board/repositoryv1"
 	"github.com/lovemew67/public-misc/connection-poller/redis"
 	"github.com/lovemew67/public-misc/cornerstone"
@@ -15,15 +18,52 @@ type ScoreV1RedisCacheRepositorier struct {
 	pool *redis.Pool
 }
 
-func (s *ScoreV1RedisCacheRepositorier) SetTopKScores(staff []*proto.ScoreV1) (err error) {
+func (s *ScoreV1RedisCacheRepositorier) SetTopKScores(ctx cornerstone.Context, scores []*proto.ScoreV1) (err error) {
+	funcName := "ScoreV1RedisCacheRepositorier.SetTopKScores"
+
+	scoreList := &proto.ScoreListV1{
+		Scores: scores,
+	}
+	b, err := goproto.Marshal(scoreList)
+	if err != nil {
+		cornerstone.Errorf(ctx, "[%s] failed to marshal json, err: %+v", funcName, err)
+		return
+	}
+
+	err = s.pool.Set(lb.DefaultMaxLengthStr, b)
+	if err != nil {
+		cornerstone.Errorf(ctx, "[%s] s.pool.Set failed, err: %+v", funcName, err)
+	}
 	return
 }
 
-func (s *ScoreV1RedisCacheRepositorier) GetTopKScores() (staff []*proto.ScoreV1, err error) {
+func (s *ScoreV1RedisCacheRepositorier) GetTopKScores(ctx cornerstone.Context) (scores []*proto.ScoreV1, err error) {
+	funcName := "ScoreV1RedisCacheRepositorier.GetTopKScores"
+
+	b, err := s.pool.GetBytes(lb.DefaultMaxLengthStr)
+	if err != nil && err.Error() != "redigo: nil returned" {
+		cornerstone.Errorf(ctx, "[%s] s.pool.GetBytes failed, err: %+v", funcName, err)
+		return
+	}
+
+	scoreList := &proto.ScoreListV1{}
+	err = goproto.Unmarshal(b, scoreList)
+	if err != nil {
+		cornerstone.Errorf(ctx, "[%s] failed to unmarshal protobuf, err: %+v", funcName, err)
+		return
+	}
+
+	scores = scoreList.Scores
 	return
 }
 
-func (s *ScoreV1RedisCacheRepositorier) CleanTopKScores() (err error) {
+func (s *ScoreV1RedisCacheRepositorier) CleanTopKScores(ctx cornerstone.Context) (err error) {
+	funcName := "ScoreV1RedisCacheRepositorier.CleanTopKScores"
+
+	err = s.pool.Delete(lb.DefaultMaxLengthStr)
+	if err != nil {
+		cornerstone.Errorf(ctx, "[%s] s.pool.Delete failed, err: %+v", funcName, err)
+	}
 	return
 }
 

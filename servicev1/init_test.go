@@ -4,6 +4,12 @@ import (
 	"log"
 	"os"
 	"testing"
+
+	"github.com/lovemew67/public-misc/cornerstone"
+)
+
+var (
+	ctx = cornerstone.NewContext()
 )
 
 func BeforeTest() {}

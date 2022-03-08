@@ -12,6 +12,7 @@ require (
 	github.com/lovemew67/public-misc/connection-poller v0.0.0-20220306151101-82075db4715b
 	github.com/lovemew67/public-misc/cornerstone v0.0.0-20220306151101-82075db4715b
 	github.com/mitchellh/go-homedir v1.1.0
+	github.com/ory/dockertest/v3 v3.6.3
 	github.com/robfig/cron/v3 v3.0.1
 	github.com/spf13/cobra v1.3.0
 	github.com/spf13/viper v1.10.1

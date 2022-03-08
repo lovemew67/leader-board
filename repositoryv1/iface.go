@@ -2,16 +2,17 @@ package repositoryv1
 
 import (
 	"github.com/lovemew67/leader-board/gen/go/proto"
+	"github.com/lovemew67/public-misc/cornerstone"
 )
 
 type ScoreV1Repository interface {
-	InsertScore(*proto.ScoreV1) (*proto.ScoreV1, error)
-	ListTopKHighestScores(limit int) ([]*proto.ScoreV1, error)
-	CleanScores() error
+	InsertScore(cornerstone.Context, *proto.ScoreV1) (*proto.ScoreV1, error)
+	ListTopKHighestScores(cornerstone.Context, int) ([]*proto.ScoreV1, error)
+	CleanScores(cornerstone.Context) error
 }
 
 type ScoreV1CacheRepository interface {
-	SetTopKScores([]*proto.ScoreV1) error
-	GetTopKScores() ([]*proto.ScoreV1, error)
-	CleanTopKScores() error
+	SetTopKScores(cornerstone.Context, []*proto.ScoreV1) error
+	GetTopKScores(cornerstone.Context) ([]*proto.ScoreV1, error)
+	CleanTopKScores(cornerstone.Context) error
 }

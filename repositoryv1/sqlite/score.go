@@ -20,23 +20,30 @@ var (
 
 type ScoreV1SQLiteRepositorier struct{}
 
-func (s *ScoreV1SQLiteRepositorier) InsertScore(staff *proto.ScoreV1) (result *proto.ScoreV1, err error) {
+func (s *ScoreV1SQLiteRepositorier) InsertScore(ctx cornerstone.Context, staff *proto.ScoreV1) (result *proto.ScoreV1, err error) {
+	funcName := "ScoreV1SQLiteRepositorier.InsertScore"
+
 	now := time.Now().UnixNano()
 	staff.Created = now
 	staff.Updated = now
+
 	db := sqlitedb
 	db = db.Create(staff)
 	err = db.Error
 	if err != nil {
+		cornerstone.Errorf(ctx, "[%s] database opertaion err: %+v", funcName, err)
 		return
 	}
 
-	result, err = s.getScore(staff.Id)
+	result, err = s.getScore(ctx, staff.Id)
 	return
 }
 
-func (s *ScoreV1SQLiteRepositorier) getScore(id string) (staff *proto.ScoreV1, err error) {
+func (s *ScoreV1SQLiteRepositorier) getScore(ctx cornerstone.Context, id string) (staff *proto.ScoreV1, err error) {
+	funcName := "ScoreV1SQLiteRepositorier.getScore"
+
 	staffList := make([]*proto.ScoreV1, 1)
+
 	db := sqlitedb
 	db = db.Where("id = ?", id)
 	db = db.Limit(1)
@@ -45,26 +52,38 @@ func (s *ScoreV1SQLiteRepositorier) getScore(id string) (staff *proto.ScoreV1, e
 	if len(staffList) != 0 {
 		staff = staffList[0]
 	} else {
+		cornerstone.Errorf(ctx, "[%s] database opertaion err: %+v", funcName, err)
 		err = fmt.Errorf("not found")
 	}
 	return
 }
 
-func (s *ScoreV1SQLiteRepositorier) ListTopKHighestScores(limit int) (scoreList []*proto.ScoreV1, err error) {
+func (s *ScoreV1SQLiteRepositorier) ListTopKHighestScores(ctx cornerstone.Context, limit int) (scoreList []*proto.ScoreV1, err error) {
+	funcName := "ScoreV1SQLiteRepositorier.ListTopKHighestScores"
+
 	scoreList = make([]*proto.ScoreV1, limit)
+
 	db := sqlitedb
 	db = db.Order("score DESC")
 	db = db.Limit(limit)
 	db = db.Find(&scoreList)
 	err = db.Error
+	if err != nil {
+		cornerstone.Errorf(ctx, "[%s] database opertaion err: %+v", funcName, err)
+	}
 	return
 }
 
-func (s *ScoreV1SQLiteRepositorier) CleanScores() (err error) {
+func (s *ScoreV1SQLiteRepositorier) CleanScores(ctx cornerstone.Context) (err error) {
+	funcName := "ScoreV1SQLiteRepositorier.CleanScores"
+
 	db := sqlitedb
 	db = db.Where("1 = 1")
 	db = db.Delete(&proto.ScoreV1{})
 	err = db.Error
+	if err != nil {
+		cornerstone.Errorf(ctx, "[%s] database opertaion err: %+v", funcName, err)
+	}
 	return
 }
 
@@ -85,14 +104,14 @@ func NewScoreV1SQLiteRepositorier(ctx cornerstone.Context) (result *ScoreV1SQLit
 	}
 	sqlitedb = db
 
-	staff := &proto.ScoreV1{}
-	if hasTable := sqlitedb.HasTable(staff); hasTable {
+	score := &proto.ScoreV1{}
+	if hasTable := sqlitedb.HasTable(score); hasTable {
 		cornerstone.Infof(ctx, "[%s] continue to reuse the table: %s", funcName, scoreV1TableName)
 		db.AutoMigrate(&proto.ScoreV1{})
 		return
 	}
 
-	if err = sqlitedb.CreateTable(staff).Error; err != nil {
+	if err = sqlitedb.CreateTable(score).Error; err != nil {
 		return
 	}
 

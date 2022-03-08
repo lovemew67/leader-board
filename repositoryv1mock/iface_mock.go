@@ -9,6 +9,7 @@ import (
 
 	gomock "github.com/golang/mock/gomock"
 	proto "github.com/lovemew67/leader-board/gen/go/proto"
+	cornerstone "github.com/lovemew67/public-misc/cornerstone"
 )
 
 // MockScoreV1Repository is a mock of ScoreV1Repository interface.
@@ -35,47 +36,47 @@ func (m *MockScoreV1Repository) EXPECT() *MockScoreV1RepositoryMockRecorder {
 }
 
 // CleanScores mocks base method.
-func (m *MockScoreV1Repository) CleanScores() error {
+func (m *MockScoreV1Repository) CleanScores(arg0 cornerstone.Context) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "CleanScores")
+	ret := m.ctrl.Call(m, "CleanScores", arg0)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
 // CleanScores indicates an expected call of CleanScores.
-func (mr *MockScoreV1RepositoryMockRecorder) CleanScores() *gomock.Call {
+func (mr *MockScoreV1RepositoryMockRecorder) CleanScores(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CleanScores", reflect.TypeOf((*MockScoreV1Repository)(nil).CleanScores))
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CleanScores", reflect.TypeOf((*MockScoreV1Repository)(nil).CleanScores), arg0)
 }
 
 // InsertScore mocks base method.
-func (m *MockScoreV1Repository) InsertScore(arg0 *proto.ScoreV1) (*proto.ScoreV1, error) {
+func (m *MockScoreV1Repository) InsertScore(arg0 cornerstone.Context, arg1 *proto.ScoreV1) (*proto.ScoreV1, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "InsertScore", arg0)
+	ret := m.ctrl.Call(m, "InsertScore", arg0, arg1)
 	ret0, _ := ret[0].(*proto.ScoreV1)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // InsertScore indicates an expected call of InsertScore.
-func (mr *MockScoreV1RepositoryMockRecorder) InsertScore(arg0 interface{}) *gomock.Call {
+func (mr *MockScoreV1RepositoryMockRecorder) InsertScore(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "InsertScore", reflect.TypeOf((*MockScoreV1Repository)(nil).InsertScore), arg0)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "InsertScore", reflect.TypeOf((*MockScoreV1Repository)(nil).InsertScore), arg0, arg1)
 }
 
 // ListTopKHighestScores mocks base method.
-func (m *MockScoreV1Repository) ListTopKHighestScores(limit int) ([]*proto.ScoreV1, error) {
+func (m *MockScoreV1Repository) ListTopKHighestScores(arg0 cornerstone.Context, arg1 int) ([]*proto.ScoreV1, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ListTopKHighestScores", limit)
+	ret := m.ctrl.Call(m, "ListTopKHighestScores", arg0, arg1)
 	ret0, _ := ret[0].([]*proto.ScoreV1)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // ListTopKHighestScores indicates an expected call of ListTopKHighestScores.
-func (mr *MockScoreV1RepositoryMockRecorder) ListTopKHighestScores(limit interface{}) *gomock.Call {
+func (mr *MockScoreV1RepositoryMockRecorder) ListTopKHighestScores(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListTopKHighestScores", reflect.TypeOf((*MockScoreV1Repository)(nil).ListTopKHighestScores), limit)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListTopKHighestScores", reflect.TypeOf((*MockScoreV1Repository)(nil).ListTopKHighestScores), arg0, arg1)
 }
 
 // MockScoreV1CacheRepository is a mock of ScoreV1CacheRepository interface.
@@ -102,44 +103,44 @@ func (m *MockScoreV1CacheRepository) EXPECT() *MockScoreV1CacheRepositoryMockRec
 }
 
 // CleanTopKScores mocks base method.
-func (m *MockScoreV1CacheRepository) CleanTopKScores() error {
+func (m *MockScoreV1CacheRepository) CleanTopKScores(arg0 cornerstone.Context) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "CleanTopKScores")
+	ret := m.ctrl.Call(m, "CleanTopKScores", arg0)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
 // CleanTopKScores indicates an expected call of CleanTopKScores.
-func (mr *MockScoreV1CacheRepositoryMockRecorder) CleanTopKScores() *gomock.Call {
+func (mr *MockScoreV1CacheRepositoryMockRecorder) CleanTopKScores(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CleanTopKScores", reflect.TypeOf((*MockScoreV1CacheRepository)(nil).CleanTopKScores))
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CleanTopKScores", reflect.TypeOf((*MockScoreV1CacheRepository)(nil).CleanTopKScores), arg0)
 }
 
 // GetTopKScores mocks base method.
-func (m *MockScoreV1CacheRepository) GetTopKScores() ([]*proto.ScoreV1, error) {
+func (m *MockScoreV1CacheRepository) GetTopKScores(arg0 cornerstone.Context) ([]*proto.ScoreV1, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetTopKScores")
+	ret := m.ctrl.Call(m, "GetTopKScores", arg0)
 	ret0, _ := ret[0].([]*proto.ScoreV1)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // GetTopKScores indicates an expected call of GetTopKScores.
-func (mr *MockScoreV1CacheRepositoryMockRecorder) GetTopKScores() *gomock.Call {
+func (mr *MockScoreV1CacheRepositoryMockRecorder) GetTopKScores(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetTopKScores", reflect.TypeOf((*MockScoreV1CacheRepository)(nil).GetTopKScores))
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetTopKScores", reflect.TypeOf((*MockScoreV1CacheRepository)(nil).GetTopKScores), arg0)
 }
 
 // SetTopKScores mocks base method.
-func (m *MockScoreV1CacheRepository) SetTopKScores(arg0 []*proto.ScoreV1) error {
+func (m *MockScoreV1CacheRepository) SetTopKScores(arg0 cornerstone.Context, arg1 []*proto.ScoreV1) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "SetTopKScores", arg0)
+	ret := m.ctrl.Call(m, "SetTopKScores", arg0, arg1)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
 // SetTopKScores indicates an expected call of SetTopKScores.
-func (mr *MockScoreV1CacheRepositoryMockRecorder) SetTopKScores(arg0 interface{}) *gomock.Call {
+func (mr *MockScoreV1CacheRepositoryMockRecorder) SetTopKScores(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetTopKScores", reflect.TypeOf((*MockScoreV1CacheRepository)(nil).SetTopKScores), arg0)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetTopKScores", reflect.TypeOf((*MockScoreV1CacheRepository)(nil).SetTopKScores), arg0, arg1)
 }

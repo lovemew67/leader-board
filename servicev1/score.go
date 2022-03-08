@@ -6,6 +6,7 @@ import (
 	"github.com/lovemew67/leader-board/domainv1"
 	"github.com/lovemew67/leader-board/gen/go/proto"
 	"github.com/lovemew67/leader-board/repositoryv1"
+	"github.com/lovemew67/public-misc/cornerstone"
 )
 
 var (
@@ -26,7 +27,7 @@ func (s *ScoreV1Servicer) InsertScoreV1Service(req *domainv1.InsertScoreV1Servic
 		err = fmt.Errorf("zero score")
 		return
 	}
-	result, err = s.r.InsertScore(req.ScoreV1)
+	result, err = s.r.InsertScore(cornerstone.NewContext(), req.ScoreV1)
 	if err != nil {
 		return
 	}
@@ -34,7 +35,7 @@ func (s *ScoreV1Servicer) InsertScoreV1Service(req *domainv1.InsertScoreV1Servic
 }
 
 func (s *ScoreV1Servicer) ListTopKScoresV1Service(req *domainv1.ListTopKScoresV1ServiceRequest) (results []*proto.ScoreV1, err error) {
-	results, err = s.r.ListTopKHighestScores(req.Limit)
+	results, err = s.r.ListTopKHighestScores(cornerstone.NewContext(), req.Limit)
 	return
 }
 

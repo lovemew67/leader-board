@@ -52,13 +52,13 @@ func cleanUpCronJobImpl(ctx cornerstone.Context, r repositoryv1.ScoreV1Repositor
 	defer recoverCleanUpCronJobImpl(ctx)
 	cornerstone.Infof(ctx, "[%s] triggered", funcName)
 
-	err := r.CleanScores()
+	err := r.CleanScores(ctx)
 	if err != nil {
 		cornerstone.Errorf(ctx, "[%s] failed to clean scores in reposiroty", funcName)
 		return
 	}
 
-	err = cr.CleanTopKScores()
+	err = cr.CleanTopKScores(ctx)
 	if err != nil {
 		cornerstone.Errorf(ctx, "[%s] failed to clean scores in cache repository", funcName)
 	}

@@ -15,7 +15,7 @@ func Test_InsertScoreV1Service(t *testing.T) {
 	defer controller.Finish()
 
 	mockScoreV1Repositorier := repositoryv1mock.NewMockScoreV1Repository(controller)
-	mockScoreV1Repositorier.EXPECT().InsertScore(gomock.Any()).Return(&proto.ScoreV1{}, nil)
+	mockScoreV1Repositorier.EXPECT().InsertScore(ctx, gomock.Any()).Return(&proto.ScoreV1{}, nil)
 
 	mockScoreV1CacheRepositorier := repositoryv1mock.NewMockScoreV1CacheRepository(controller)
 
@@ -54,7 +54,7 @@ func Test_ListTopKScoresV1Service(t *testing.T) {
 	defer controller.Finish()
 
 	mockScoreV1Repositorier := repositoryv1mock.NewMockScoreV1Repository(controller)
-	mockScoreV1Repositorier.EXPECT().ListTopKHighestScores(gomock.Any()).Return([]*proto.ScoreV1{}, nil)
+	mockScoreV1Repositorier.EXPECT().ListTopKHighestScores(ctx, gomock.Any()).Return([]*proto.ScoreV1{}, nil)
 
 	mockScoreV1CacheRepositorier := repositoryv1mock.NewMockScoreV1CacheRepository(controller)
 

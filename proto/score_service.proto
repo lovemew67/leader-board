@@ -53,3 +53,7 @@ message ListTopKScoresV1OutterResponse {
 message InsertScoreV1Response {
   ScoreV1 result = 1;
 }
+
+message ScoreListV1 {
+  repeated ScoreV1 scores = 1;
+}
