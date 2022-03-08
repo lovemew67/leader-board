@@ -41,8 +41,11 @@ func (s *ScoreV1RedisCacheRepositorier) GetTopKScores(ctx cornerstone.Context) (
 	funcName := "ScoreV1RedisCacheRepositorier.GetTopKScores"
 
 	b, err := s.pool.GetBytes(lb.DefaultMaxLengthStr)
-	if err != nil && err.Error() != "redigo: nil returned" {
+	if err != nil {
 		cornerstone.Errorf(ctx, "[%s] s.pool.GetBytes failed, err: %+v", funcName, err)
+		if err.Error() == lb.ErrRedisKeyNotFoundStr {
+			err = lb.ErrRedisKeyNotFound
+		}
 		return
 	}
 

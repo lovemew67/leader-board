@@ -10,7 +10,6 @@ import (
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/lovemew67/leader-board/domainv1"
-	"github.com/lovemew67/leader-board/lb"
 	"github.com/lovemew67/leader-board/servicev1"
 	"github.com/lovemew67/public-misc/cornerstone"
 	"github.com/spf13/viper"
@@ -156,7 +155,7 @@ func (gs *GinServer) config(c *gin.Context) {
 	c.JSON(http.StatusOK, viper.AllSettings())
 }
 
-// staff v1 handlers
+// score v1 handlers
 
 func (gs *GinServer) insertScoreV1Handler(c *gin.Context) {
 	input := &domainv1.InsertScoreV1ServiceRequest{}
@@ -177,12 +176,6 @@ func (gs *GinServer) listTopKScoresV1Handler(c *gin.Context) {
 	if errBind := c.BindQuery(&input); errBind != nil {
 		cornerstone.FromCodeErrorWithStatus(c, cornerstone.FromNativeError(errBind))
 		return
-	}
-	if input.Limit <= 0 {
-		input.Limit = lb.DefaultMaxLengthInt
-	}
-	if input.Limit > lb.DefaultMaxLengthInt {
-		input.Limit = lb.DefaultMaxLengthInt
 	}
 	results, err := gs.ss.ListTopKScoresV1Service(input)
 	if err != nil {

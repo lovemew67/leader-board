@@ -7,6 +7,7 @@ import (
 	"testing"
 
 	"github.com/lovemew67/leader-board/gen/go/proto"
+	"github.com/lovemew67/leader-board/lb"
 	"github.com/lovemew67/public-misc/connection-poller/redis"
 	"github.com/lovemew67/public-misc/cornerstone"
 	"github.com/ory/dockertest/v3"
@@ -84,7 +85,8 @@ func afterTest() {
 func Test_All(t *testing.T) {
 	// test: get before set
 	scores, err := repo.GetTopKScores(ctx)
-	assert.NoError(t, err)
+	assert.Error(t, err)
+	assert.Equal(t, lb.ErrRedisKeyNotFound, err)
 	assert.Equal(t, 0, len(scores))
 
 	// test: set empty
@@ -103,7 +105,8 @@ func Test_All(t *testing.T) {
 
 	// test: get after delete
 	scores, err = repo.GetTopKScores(ctx)
-	assert.NoError(t, err)
+	assert.Error(t, err)
+	assert.Equal(t, lb.ErrRedisKeyNotFound, err)
 	assert.Equal(t, 0, len(scores))
 
 	// test: set non-empty
@@ -131,6 +134,7 @@ func Test_All(t *testing.T) {
 
 	// test: get after delete
 	scores, err = repo.GetTopKScores(ctx)
-	assert.NoError(t, err)
+	assert.Error(t, err)
+	assert.Equal(t, lb.ErrRedisKeyNotFound, err)
 	assert.Equal(t, 0, len(scores))
 }

@@ -5,6 +5,7 @@ import (
 
 	"github.com/lovemew67/leader-board/domainv1"
 	"github.com/lovemew67/leader-board/gen/go/proto"
+	"github.com/lovemew67/leader-board/lb"
 	"github.com/lovemew67/leader-board/repositoryv1"
 	"github.com/lovemew67/public-misc/cornerstone"
 )
@@ -31,11 +32,33 @@ func (s *ScoreV1Servicer) InsertScoreV1Service(req *domainv1.InsertScoreV1Servic
 	if err != nil {
 		return
 	}
+	err = s.cr.CleanTopKScores(cornerstone.NewContext())
 	return
 }
 
 func (s *ScoreV1Servicer) ListTopKScoresV1Service(req *domainv1.ListTopKScoresV1ServiceRequest) (results []*proto.ScoreV1, err error) {
-	results, err = s.r.ListTopKHighestScores(cornerstone.NewContext(), req.Limit)
+	if req.Limit <= 0 {
+		req.Limit = lb.DefaultMaxLengthInt
+	}
+	if req.Limit > lb.DefaultMaxLengthInt {
+		req.Limit = lb.DefaultMaxLengthInt
+	}
+	results, err = s.cr.GetTopKScores(cornerstone.NewContext())
+	if err == nil {
+		results = results[:req.Limit]
+	} else {
+		if err == lb.ErrRedisKeyNotFound {
+			results, err = s.r.ListTopKHighestScores(cornerstone.NewContext(), lb.DefaultMaxLengthInt)
+			if err != nil {
+				return
+			}
+			err = s.cr.SetTopKScores(cornerstone.NewContext(), results)
+			if err != nil {
+				return
+			}
+			results = results[:req.Limit]
+		}
+	}
 	return
 }
 

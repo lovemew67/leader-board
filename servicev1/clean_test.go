@@ -5,7 +5,6 @@ import (
 
 	"github.com/golang/mock/gomock"
 	"github.com/lovemew67/leader-board/repositoryv1mock"
-	"github.com/lovemew67/public-misc/cornerstone"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -20,7 +19,6 @@ func Test_Start(t *testing.T) {
 	cleanUpBackgroundV1Servicer, err := NewCleanUpBackgroundV1Servicer(mockScoreV1Repositorier, mockScoreV1CacheRepositorier)
 	assert.NoError(t, err)
 
-	ctx := cornerstone.NewContext()
 	err = cleanUpBackgroundV1Servicer.Start(ctx)
 	assert.NoError(t, err)
 }
