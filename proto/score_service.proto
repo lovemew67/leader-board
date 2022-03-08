@@ -48,10 +48,12 @@ message ListTopKScoresV1InnerResponse {
 
 message ListTopKScoresV1OutterResponse {
   ListTopKScoresV1InnerResponse result = 1;
+  string  transit_id = 2;
 }
 
 message InsertScoreV1Response {
   ScoreV1 result = 1;
+  string transit_id = 2;
 }
 
 message ScoreListV1 {

@@ -33,6 +33,8 @@ func (s *ScoreV1SQLiteRepositorier) InsertScore(ctx cornerstone.Context, score *
 	if err != nil {
 		cornerstone.Errorf(ctx, "[%s] database opertaion err: %+v", funcName, err)
 		return
+	} else {
+		cornerstone.Debugf(ctx, "[%s] inserted scores in sqlite", funcName)
 	}
 
 	result, err = s.getScore(ctx, score.Id)
@@ -70,6 +72,8 @@ func (s *ScoreV1SQLiteRepositorier) ListTopKHighestScores(ctx cornerstone.Contex
 	err = db.Error
 	if err != nil {
 		cornerstone.Errorf(ctx, "[%s] database opertaion err: %+v", funcName, err)
+	} else {
+		cornerstone.Debugf(ctx, "[%s] got top k scores: %d, in sqlite", funcName, limit)
 	}
 	return
 }
@@ -83,6 +87,8 @@ func (s *ScoreV1SQLiteRepositorier) CleanScores(ctx cornerstone.Context) (err er
 	err = db.Error
 	if err != nil {
 		cornerstone.Errorf(ctx, "[%s] database opertaion err: %+v", funcName, err)
+	} else {
+		cornerstone.Debugf(ctx, "[%s] cleaned scores in sqlite", funcName)
 	}
 	return
 }

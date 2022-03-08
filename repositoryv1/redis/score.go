@@ -33,6 +33,8 @@ func (s *ScoreV1RedisCacheRepositorier) SetTopKScores(ctx cornerstone.Context, s
 	err = s.pool.Set(lb.DefaultMaxLengthStr, b)
 	if err != nil {
 		cornerstone.Errorf(ctx, "[%s] s.pool.Set failed, err: %+v", funcName, err)
+	} else {
+		cornerstone.Debugf(ctx, "[%s] set top k scores in redis", funcName)
 	}
 	return
 }
@@ -42,9 +44,11 @@ func (s *ScoreV1RedisCacheRepositorier) GetTopKScores(ctx cornerstone.Context) (
 
 	b, err := s.pool.GetBytes(lb.DefaultMaxLengthStr)
 	if err != nil {
-		cornerstone.Errorf(ctx, "[%s] s.pool.GetBytes failed, err: %+v", funcName, err)
 		if err.Error() == lb.ErrRedisKeyNotFoundStr {
+			cornerstone.Debugf(ctx, "[%s] value not found with key: %s", funcName, lb.DefaultMaxLengthStr)
 			err = lb.ErrRedisKeyNotFound
+		} else {
+			cornerstone.Errorf(ctx, "[%s] s.pool.GetBytes failed, err: %+v", funcName, err)
 		}
 		return
 	}
@@ -54,6 +58,8 @@ func (s *ScoreV1RedisCacheRepositorier) GetTopKScores(ctx cornerstone.Context) (
 	if err != nil {
 		cornerstone.Errorf(ctx, "[%s] failed to unmarshal protobuf, err: %+v", funcName, err)
 		return
+	} else {
+		cornerstone.Debugf(ctx, "[%s] got top k scores in redis", funcName)
 	}
 
 	scores = scoreList.Scores
@@ -66,6 +72,8 @@ func (s *ScoreV1RedisCacheRepositorier) CleanTopKScores(ctx cornerstone.Context)
 	err = s.pool.Delete(lb.DefaultMaxLengthStr)
 	if err != nil {
 		cornerstone.Errorf(ctx, "[%s] s.pool.Delete failed, err: %+v", funcName, err)
+	} else {
+		cornerstone.Debugf(ctx, "[%s] cleaned top k scores in redis", funcName)
 	}
 	return
 }

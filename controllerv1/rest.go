@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"strconv"
 	"time"
 
 	"github.com/gin-contrib/cors"
@@ -158,32 +159,50 @@ func (gs *GinServer) config(c *gin.Context) {
 // score v1 handlers
 
 func (gs *GinServer) insertScoreV1Handler(c *gin.Context) {
+	funcName := "GinServer.insertScoreV1Handler"
+	ctx := cornerstone.NewContext()
+	tid := strconv.FormatInt(time.Now().UnixNano(), 10)
+	ctx.Set("transit_id", tid)
 	input := &domainv1.InsertScoreV1ServiceRequest{}
 	if errBind := c.ShouldBindJSON(input); errBind != nil {
+		cornerstone.Errorf(ctx, "[%s] failed to bind json, input: %+v, err: %+v", funcName, input, errBind)
 		cornerstone.FromCodeErrorWithStatus(c, cornerstone.FromNativeError(errBind))
 		return
 	}
-	result, err := gs.ss.InsertScoreV1Service(cornerstone.NewContext(), input)
+	result, err := gs.ss.InsertScoreV1Service(ctx, input)
 	if err != nil {
+		cornerstone.Errorf(ctx, "[%s] insert score v1 service failed, err: %+v", funcName, err)
 		cornerstone.FromCodeErrorWithStatus(c, cornerstone.FromNativeError(err))
 		return
 	}
-	cornerstone.DoneWithStatus(c, result)
+	c.AbortWithStatusJSON(http.StatusOK, gin.H{
+		"result":     result,
+		"transit_id": tid,
+	})
 }
 
 func (gs *GinServer) listTopKScoresV1Handler(c *gin.Context) {
+	funcName := "GinServer.listTopKScoresV1Handler"
+	ctx := cornerstone.NewContext()
+	tid := strconv.FormatInt(time.Now().UnixNano(), 10)
+	ctx.Set("transit_id", tid)
 	input := &domainv1.ListTopKScoresV1ServiceRequest{}
 	if errBind := c.BindQuery(&input); errBind != nil {
+		cornerstone.Errorf(ctx, "[%s] failed to bind json, input: %+v, err: %+v", funcName, input, errBind)
 		cornerstone.FromCodeErrorWithStatus(c, cornerstone.FromNativeError(errBind))
 		return
 	}
 	results, err := gs.ss.ListTopKScoresV1Service(cornerstone.NewContext(), input)
 	if err != nil {
+		cornerstone.Errorf(ctx, "[%s] list top k scores v1 service failed, err: %+v", funcName, err)
 		cornerstone.FromCodeErrorWithStatus(c, cornerstone.FromNativeError(err))
 		return
 	}
-	cornerstone.DoneWithStatus(c, gin.H{
-		"scores": results,
+	c.AbortWithStatusJSON(http.StatusOK, gin.H{
+		"result": gin.H{
+			"scores": results,
+		},
+		"transit_id": tid,
 	})
 }
 

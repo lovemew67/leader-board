@@ -83,6 +83,9 @@
       "properties": {
         "result": {
           "$ref": "#/definitions/protoScoreV1"
+        },
+        "transit_id": {
+          "type": "string"
         }
       }
     },
@@ -102,6 +105,9 @@
       "properties": {
         "result": {
           "$ref": "#/definitions/protoListTopKScoresV1InnerResponse"
+        },
+        "transit_id": {
+          "type": "string"
         }
       }
     },
