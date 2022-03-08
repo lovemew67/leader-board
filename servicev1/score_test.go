@@ -109,7 +109,7 @@ func Test_ListTopKScoresV1Service_CacheHitWithLimit(t *testing.T) {
 	assert.Equal(t, lb.DefaultMaxLengthInt, len(result))
 }
 
-func Test_ListTopKScoresV1Service_CacheMissWithLimit(t *testing.T) {
+func Test_ListTopKScoresV1Service_CacheMissWithLimitLess(t *testing.T) {
 	controller := gomock.NewController(t)
 	defer controller.Finish()
 
@@ -135,4 +135,32 @@ func Test_ListTopKScoresV1Service_CacheMissWithLimit(t *testing.T) {
 	assert.NoError(t, err)
 	assert.NotNil(t, result)
 	assert.Equal(t, 5, len(result))
+}
+
+func Test_ListTopKScoresV1Service_CacheMissWithLimitMore(t *testing.T) {
+	controller := gomock.NewController(t)
+	defer controller.Finish()
+
+	mockScoreList := make([]*proto.ScoreV1, lb.DefaultMaxLengthInt)
+	for i := 0; i < lb.DefaultMaxLengthInt; i++ {
+		mockScoreList[i] = &proto.ScoreV1{}
+	}
+
+	mockScoreV1Repositorier := repositoryv1mock.NewMockScoreV1Repository(controller)
+	mockScoreV1Repositorier.EXPECT().ListTopKHighestScores(ctx, lb.DefaultMaxLengthInt).Return(mockScoreList, nil)
+
+	mockScoreV1CacheRepositorier := repositoryv1mock.NewMockScoreV1CacheRepository(controller)
+	mockScoreV1CacheRepositorier.EXPECT().GetTopKScores(ctx).Return(nil, lb.ErrRedisKeyNotFound)
+	mockScoreV1CacheRepositorier.EXPECT().SetTopKScores(ctx, mockScoreList).Return(nil)
+
+	scoreV1Servicer, err := NewScoreV1Servicer(mockScoreV1Repositorier, mockScoreV1CacheRepositorier)
+	assert.NoError(t, err)
+
+	req := &domainv1.ListTopKScoresV1ServiceRequest{
+		Limit: 2 * lb.DefaultMaxLengthInt,
+	}
+	result, err := scoreV1Servicer.ListTopKScoresV1Service(req)
+	assert.NoError(t, err)
+	assert.NotNil(t, result)
+	assert.Equal(t, lb.DefaultMaxLengthInt, len(result))
 }
