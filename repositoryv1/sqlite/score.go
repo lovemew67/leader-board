@@ -20,22 +20,22 @@ var (
 
 type ScoreV1SQLiteRepositorier struct{}
 
-func (s *ScoreV1SQLiteRepositorier) InsertScore(ctx cornerstone.Context, staff *proto.ScoreV1) (result *proto.ScoreV1, err error) {
+func (s *ScoreV1SQLiteRepositorier) InsertScore(ctx cornerstone.Context, score *proto.ScoreV1) (result *proto.ScoreV1, err error) {
 	funcName := "ScoreV1SQLiteRepositorier.InsertScore"
 
 	now := time.Now().UnixNano()
-	staff.Created = now
-	staff.Updated = now
+	score.Created = now
+	score.Updated = now
 
 	db := sqlitedb
-	db = db.Create(staff)
+	db = db.Create(score)
 	err = db.Error
 	if err != nil {
 		cornerstone.Errorf(ctx, "[%s] database opertaion err: %+v", funcName, err)
 		return
 	}
 
-	result, err = s.getScore(ctx, staff.Id)
+	result, err = s.getScore(ctx, score.Id)
 	return
 }
 
