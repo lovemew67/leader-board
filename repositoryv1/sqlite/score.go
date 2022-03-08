@@ -37,17 +37,17 @@ func (s *ScoreV1SQLiteRepositorier) InsertScore(ctx cornerstone.Context, score *
 		cornerstone.Debugf(ctx, "[%s] inserted scores in sqlite", funcName)
 	}
 
-	result, err = s.getScore(ctx, score.Id)
+	result, err = s.getScore(ctx, score.ClientId)
 	return
 }
 
-func (s *ScoreV1SQLiteRepositorier) getScore(ctx cornerstone.Context, id string) (staff *proto.ScoreV1, err error) {
+func (s *ScoreV1SQLiteRepositorier) getScore(ctx cornerstone.Context, clientID string) (staff *proto.ScoreV1, err error) {
 	funcName := "ScoreV1SQLiteRepositorier.getScore"
 
 	staffList := make([]*proto.ScoreV1, 1)
 
 	db := sqlitedb
-	db = db.Where("id = ?", id)
+	db = db.Where("client_id = ?", clientID)
 	db = db.Limit(1)
 	db = db.Find(&staffList)
 	err = db.Error

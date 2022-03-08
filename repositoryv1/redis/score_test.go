@@ -112,12 +112,12 @@ func Test_All(t *testing.T) {
 	// test: set non-empty
 	testScores = []*proto.ScoreV1{
 		{
-			Id:    "id1",
-			Score: 1.0,
+			ClientId: "client_id1",
+			Score:    1.0,
 		},
 		{
-			Id:    "id2",
-			Score: 2.0,
+			ClientId: "client_id2",
+			Score:    2.0,
 		},
 	}
 	err = repo.SetTopKScores(ctx, testScores)

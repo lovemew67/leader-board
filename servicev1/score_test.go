@@ -33,7 +33,7 @@ func Test_InsertScoreV1Service(t *testing.T) {
 
 	req = &domainv1.InsertScoreV1ServiceRequest{
 		ScoreV1: &proto.ScoreV1{
-			Id: "id",
+			ClientId: "client_id",
 		},
 	}
 	result, err = scoreV1Servicer.InsertScoreV1Service(ctx, req)
@@ -42,8 +42,8 @@ func Test_InsertScoreV1Service(t *testing.T) {
 
 	req = &domainv1.InsertScoreV1ServiceRequest{
 		ScoreV1: &proto.ScoreV1{
-			Id:    "id",
-			Score: 1,
+			ClientId: "client_id",
+			Score:    1,
 		},
 	}
 	result, err = scoreV1Servicer.InsertScoreV1Service(ctx, req)

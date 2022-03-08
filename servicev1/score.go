@@ -21,8 +21,8 @@ type ScoreV1Servicer struct {
 
 func (s *ScoreV1Servicer) InsertScoreV1Service(ctx cornerstone.Context, req *domainv1.InsertScoreV1ServiceRequest) (result *proto.ScoreV1, err error) {
 	funcName := "ScoreV1Servicer.InsertScoreV1Service"
-	if req.Id == "" {
-		err = fmt.Errorf("empty id")
+	if req.ClientId == "" {
+		err = fmt.Errorf("empty client id")
 		return
 	}
 	if req.Score == 0 {
@@ -33,7 +33,7 @@ func (s *ScoreV1Servicer) InsertScoreV1Service(ctx cornerstone.Context, req *dom
 	if err != nil {
 		return
 	}
-	cornerstone.Debugf(ctx, "[%s] inserted score: %f, id: %s", funcName, req.Score, req.Id)
+	cornerstone.Debugf(ctx, "[%s] inserted score: %f, client id: %s", funcName, req.Score, req.ClientId)
 	err = s.cr.CleanTopKScores(ctx)
 	return
 }

@@ -5,8 +5,8 @@ package proto;
 option go_package = ".;proto";
 
 message ScoreV1 {
-  // @inject_tag: json:"id" bson:"id" gorm:"column:id;primary_key"
-  string id = 1;
+  // @inject_tag: json:"client_id" bson:"client_id" gorm:"column:client_id"
+  string client_id = 1;
 
   // @inject_tag: json:"created" bson:"created" gorm:"column:created"
   int64 created = 2;

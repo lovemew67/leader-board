@@ -54,8 +54,8 @@ func Test_All(t *testing.T) {
 	// test: insert more than default scores
 	for i := 0; i < lb.DefaultMaxLengthInt-5; i++ {
 		_, err = repo.InsertScore(ctx, &proto.ScoreV1{
-			Id:    time.Now().UTC().String(),
-			Score: float32(i),
+			ClientId: time.Now().UTC().String(),
+			Score:    float32(i),
 		})
 		assert.NoError(t, err)
 	}
@@ -77,8 +77,8 @@ func Test_All(t *testing.T) {
 	// test: insert more than default scores
 	for i := 0; i < 2*lb.DefaultMaxLengthInt; i++ {
 		_, err = repo.InsertScore(ctx, &proto.ScoreV1{
-			Id:    time.Now().UTC().String(),
-			Score: float32(i),
+			ClientId: time.Now().UTC().String(),
+			Score:    float32(i),
 		})
 		assert.NoError(t, err)
 	}
