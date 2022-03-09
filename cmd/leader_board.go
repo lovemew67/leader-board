@@ -14,6 +14,7 @@ import (
 	"github.com/lovemew67/leader-board/servicev1"
 	"github.com/lovemew67/public-misc/cornerstone"
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 )
 
 var (
@@ -35,7 +36,7 @@ func newLeaderBoardCmd() (result *cobra.Command, err error) {
 				cornerstone.Panicf(ctx, "[%s] failed to create staff v1 repositiory, err: %+v", funcName, errRepository)
 			}
 			ScoreV1CacheRepositorier, errRepository := redis.NewScoreV1RedisCacheRepositorier(ctx, &conredis.Config{
-				Host: "localhost:6379",
+				Host: viper.GetString("database.redis.host"),
 			})
 			if errRepository != nil {
 				cornerstone.Panicf(ctx, "[%s] failed to create staff v1 cache repositiory, err: %+v", funcName, errRepository)

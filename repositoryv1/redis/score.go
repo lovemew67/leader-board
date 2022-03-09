@@ -69,6 +69,14 @@ func (s *ScoreV1RedisCacheRepositorier) GetTopKScores(ctx cornerstone.Context) (
 func (s *ScoreV1RedisCacheRepositorier) CleanTopKScores(ctx cornerstone.Context) (err error) {
 	funcName := "ScoreV1RedisCacheRepositorier.CleanTopKScores"
 
+	exist, err := s.pool.Exists(lb.DefaultMaxLengthStr)
+	if err != nil {
+		cornerstone.Errorf(ctx, "[%s] s.pool.Exists failed, err: %+v", funcName, err)
+		return
+	}
+	if !exist {
+		return
+	}
 	err = s.pool.Delete(lb.DefaultMaxLengthStr)
 	if err != nil {
 		cornerstone.Errorf(ctx, "[%s] s.pool.Delete failed, err: %+v", funcName, err)

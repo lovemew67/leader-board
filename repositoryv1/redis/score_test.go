@@ -89,17 +89,26 @@ func Test_All(t *testing.T) {
 	assert.Equal(t, lb.ErrRedisKeyNotFound, err)
 	assert.Equal(t, 0, len(scores))
 
+	// test: get before set empty
+	scores, err = repo.GetTopKScores(ctx)
+	assert.Error(t, err)
+	assert.Equal(t, 0, len(scores))
+
+	// test: delete before set empty
+	err = repo.CleanTopKScores(ctx)
+	assert.NoError(t, err)
+
 	// test: set empty
 	testScores := []*proto.ScoreV1{}
 	err = repo.SetTopKScores(ctx, testScores)
 	assert.NoError(t, err)
 
-	// test: get after set
+	// test: get after set empty
 	scores, err = repo.GetTopKScores(ctx)
 	assert.NoError(t, err)
 	assert.Equal(t, 0, len(scores))
 
-	// test: delete
+	// test: delete after set empty
 	err = repo.CleanTopKScores(ctx)
 	assert.NoError(t, err)
 

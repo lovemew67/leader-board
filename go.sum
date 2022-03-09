@@ -348,11 +348,11 @@ github.com/leodido/go-urn v1.2.0/go.mod h1:+8+nEpDfqqsY+g338gtMEUOtuK+4dEMhiQEgx
 github.com/lib/pq v0.0.0-20180327071824-d34b9ff171c2/go.mod h1:5WUZQaWbwv1U+lTReE5YruASi9Al49XbQIvNi/34Woo=
 github.com/lib/pq v1.1.1 h1:sJZmqHoEaY7f+NPP8pgLB/WxulyR3fewgCM2qaSlBb4=
 github.com/lib/pq v1.1.1/go.mod h1:5WUZQaWbwv1U+lTReE5YruASi9Al49XbQIvNi/34Woo=
-github.com/lovemew67/public-misc/connection-poller v0.0.0-20220306151101-82075db4715b h1:QFDrzaZEgZBEaZYSWdnEoG5m+tK2e/n+FFR2t6VXy5w=
-github.com/lovemew67/public-misc/connection-poller v0.0.0-20220306151101-82075db4715b/go.mod h1:8J81RYElZSuAmAEew4kq55nVuUG4Ym4pWX7i/+BDHn8=
+github.com/lovemew67/public-misc/connection-poller v0.0.0-20220309104905-834fd67c3520 h1:KQTKkMpLhnKkp6CrZxBTtb4lv1mHed8nEUQt7YpoShw=
+github.com/lovemew67/public-misc/connection-poller v0.0.0-20220309104905-834fd67c3520/go.mod h1:8J81RYElZSuAmAEew4kq55nVuUG4Ym4pWX7i/+BDHn8=
 github.com/lovemew67/public-misc/cornerstone v0.0.0-20211126121849-916d18017651/go.mod h1:ZzDuinZ26ctydI9yiGPXnVWeZ4LRwKnObRsonBenMIc=
-github.com/lovemew67/public-misc/cornerstone v0.0.0-20220306151101-82075db4715b h1:My4oDnHN5tFLHD54POnxPSW7nm0OnSZ1sCMqFbcmmcQ=
-github.com/lovemew67/public-misc/cornerstone v0.0.0-20220306151101-82075db4715b/go.mod h1:ZzDuinZ26ctydI9yiGPXnVWeZ4LRwKnObRsonBenMIc=
+github.com/lovemew67/public-misc/cornerstone v0.0.0-20220309104905-834fd67c3520 h1:Tdnw70stMrmlGvP94XBBkk8yi8h04/eoI6LsvXee+9I=
+github.com/lovemew67/public-misc/cornerstone v0.0.0-20220309104905-834fd67c3520/go.mod h1:ZzDuinZ26ctydI9yiGPXnVWeZ4LRwKnObRsonBenMIc=
 github.com/lyft/protoc-gen-star v0.5.3/go.mod h1:V0xaHgaf5oCCqmcxYcWiDfTiKsZsRc87/1qhoTACD8w=
 github.com/magiconair/properties v1.8.5 h1:b6kJs+EmPFMYGkow9GiUyCyOvIwYetYJ3fSaWak/Gls=
 github.com/magiconair/properties v1.8.5/go.mod h1:y3VJvCyxH9uVvJTWEGAELF3aiYNyPKd5NZ3oSwXrF60=

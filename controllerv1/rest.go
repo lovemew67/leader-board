@@ -86,7 +86,7 @@ func panicMiddleware() (result gin.HandlerFunc) {
 
 func noRouteMiddleware() (result gin.HandlerFunc) {
 	result = func(c *gin.Context) {
-		c.AbortWithStatusJSON(http.StatusInternalServerError, middlewareResponse{
+		c.AbortWithStatusJSON(http.StatusNotFound, middlewareResponse{
 			ErrorMessage: fmt.Sprintf("page not found, method: %s uri: %s", c.Request.Method, c.Request.Host+c.Request.URL.Path),
 		})
 	}

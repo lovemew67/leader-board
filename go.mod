@@ -9,8 +9,8 @@ require (
 	github.com/golang/protobuf v1.5.2
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.8.0
 	github.com/jinzhu/gorm v1.9.16
-	github.com/lovemew67/public-misc/connection-poller v0.0.0-20220306151101-82075db4715b
-	github.com/lovemew67/public-misc/cornerstone v0.0.0-20220306151101-82075db4715b
+	github.com/lovemew67/public-misc/connection-poller v0.0.0-20220309104905-834fd67c3520
+	github.com/lovemew67/public-misc/cornerstone v0.0.0-20220309104905-834fd67c3520
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/ory/dockertest/v3 v3.6.3
 	github.com/robfig/cron/v3 v3.0.1

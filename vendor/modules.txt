@@ -71,10 +71,10 @@ github.com/jinzhu/inflection
 github.com/json-iterator/go
 # github.com/leodido/go-urn v1.2.0
 github.com/leodido/go-urn
-# github.com/lovemew67/public-misc/connection-poller v0.0.0-20220306151101-82075db4715b
+# github.com/lovemew67/public-misc/connection-poller v0.0.0-20220309104905-834fd67c3520
 ## explicit
 github.com/lovemew67/public-misc/connection-poller/redis
-# github.com/lovemew67/public-misc/cornerstone v0.0.0-20220306151101-82075db4715b
+# github.com/lovemew67/public-misc/cornerstone v0.0.0-20220309104905-834fd67c3520
 ## explicit
 github.com/lovemew67/public-misc/cornerstone
 # github.com/magiconair/properties v1.8.5
