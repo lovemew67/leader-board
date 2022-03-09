@@ -27,7 +27,15 @@ func (s *ScoreV1SQLiteRepositorier) InsertScore(ctx cornerstone.Context, score *
 	score.Created = now
 	score.Updated = now
 
+	// FIXME: sqlite upsert
 	db := sqlitedb
+	db = db.Where("client_id = ?", score.ClientId)
+	db.Delete(&proto.ScoreV1{})
+	err = db.Error
+	if err != nil {
+		cornerstone.Errorf(ctx, "[%s] database opertaion err: %+v", funcName, err)
+		return
+	}
 	db = db.Create(score)
 	err = db.Error
 	if err != nil {
