@@ -84,7 +84,7 @@
         "result": {
           "$ref": "#/definitions/protoScoreV1"
         },
-        "transitId": {
+        "transit_id": {
           "type": "string"
         }
       }
@@ -106,7 +106,7 @@
         "result": {
           "$ref": "#/definitions/protoListTopKScoresV1InnerResponse"
         },
-        "transitId": {
+        "transit_id": {
           "type": "string"
         }
       }
@@ -114,19 +114,9 @@
     "protoScoreV1": {
       "type": "object",
       "properties": {
-        "clientId": {
+        "client_id": {
           "type": "string",
           "title": "@inject_tag: json:\"client_id\" bson:\"client_id\" gorm:\"column:client_id\""
-        },
-        "created": {
-          "type": "string",
-          "format": "int64",
-          "title": "@inject_tag: json:\"created\" bson:\"created\" gorm:\"column:created\""
-        },
-        "updated": {
-          "type": "string",
-          "format": "int64",
-          "title": "@inject_tag: json:\"updated\" bson:\"updated\" gorm:\"column:updated\""
         },
         "score": {
           "type": "number",
