@@ -12,8 +12,11 @@ const (
 )
 
 const (
-	dataFolder               = "./data"
 	formatSqliteDatabasePath = "%s/leaderboard.sqlite"
+)
+
+var (
+	dataFolder = "./data"
 )
 
 var (

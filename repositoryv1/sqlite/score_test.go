@@ -52,7 +52,7 @@ func Test_All(t *testing.T) {
 	assert.NoError(t, err)
 
 	// test: insert more than default scores
-	for i := 0; i < lb.DefaultMaxLengthInt-5; i++ {
+	for i := 0; i < lb.DefaultMaxLengthInt/2; i++ {
 		_, err = repo.InsertScore(ctx, &proto.ScoreV1{
 			ClientId: time.Now().UTC().String(),
 			Score:    float32(i),
@@ -62,7 +62,7 @@ func Test_All(t *testing.T) {
 
 	// test: get only top 10
 	result, err = repo.ListTopKHighestScores(ctx, lb.DefaultMaxLengthInt)
-	assert.Equal(t, lb.DefaultMaxLengthInt-5, len(result))
+	assert.Equal(t, lb.DefaultMaxLengthInt/2, len(result))
 	assert.NoError(t, err)
 
 	// test: delete after insert

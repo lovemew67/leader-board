@@ -83,15 +83,10 @@ func afterTest() {
 }
 
 func Test_All(t *testing.T) {
-	// test: get before set
+	// test: get before set empty
 	scores, err := repo.GetTopKScores(ctx)
 	assert.Error(t, err)
 	assert.Equal(t, lb.ErrRedisKeyNotFound, err)
-	assert.Equal(t, 0, len(scores))
-
-	// test: get before set empty
-	scores, err = repo.GetTopKScores(ctx)
-	assert.Error(t, err)
 	assert.Equal(t, 0, len(scores))
 
 	// test: delete before set empty
@@ -137,7 +132,7 @@ func Test_All(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Equal(t, 2, len(scores))
 
-	// test: delete
+	// test: delete after set
 	err = repo.CleanTopKScores(ctx)
 	assert.NoError(t, err)
 

@@ -8,6 +8,7 @@ import (
 	"github.com/lovemew67/leader-board/gen/go/proto"
 	"github.com/lovemew67/leader-board/repositoryv1"
 	"github.com/lovemew67/public-misc/cornerstone"
+	"github.com/spf13/viper"
 )
 
 const (
@@ -37,13 +38,13 @@ func (s *ScoreV1SQLiteRepositorier) InsertScore(ctx cornerstone.Context, score *
 		return
 	}
 	db = db.Create(score)
+
 	err = db.Error
 	if err != nil {
 		cornerstone.Errorf(ctx, "[%s] database opertaion err: %+v", funcName, err)
 		return
-	} else {
-		cornerstone.Debugf(ctx, "[%s] inserted scores in sqlite", funcName)
 	}
+	cornerstone.Debugf(ctx, "[%s] inserted scores in sqlite", funcName)
 
 	result, err = s.getScore(ctx, score.ClientId)
 	return
@@ -58,6 +59,7 @@ func (s *ScoreV1SQLiteRepositorier) getScore(ctx cornerstone.Context, clientID s
 	db = db.Where("client_id = ?", clientID)
 	db = db.Limit(1)
 	db = db.Find(&staffList)
+
 	err = db.Error
 	if len(staffList) != 0 {
 		staff = staffList[0]
@@ -77,6 +79,7 @@ func (s *ScoreV1SQLiteRepositorier) ListTopKHighestScores(ctx cornerstone.Contex
 	db = db.Order("score DESC")
 	db = db.Limit(limit)
 	db = db.Find(&scoreList)
+
 	err = db.Error
 	if err != nil {
 		cornerstone.Errorf(ctx, "[%s] database opertaion err: %+v", funcName, err)
@@ -92,6 +95,7 @@ func (s *ScoreV1SQLiteRepositorier) CleanScores(ctx cornerstone.Context) (err er
 	db := sqlitedb
 	db = db.Where("1 = 1")
 	db = db.Delete(&proto.ScoreV1{})
+
 	err = db.Error
 	if err != nil {
 		cornerstone.Errorf(ctx, "[%s] database opertaion err: %+v", funcName, err)
@@ -103,6 +107,11 @@ func (s *ScoreV1SQLiteRepositorier) CleanScores(ctx cornerstone.Context) (err er
 
 func NewScoreV1SQLiteRepositorier(ctx cornerstone.Context) (result *ScoreV1SQLiteRepositorier, err error) {
 	funcName := "NewScoreV1SQLiteRepositorier"
+
+	viperDataFolder := viper.GetString("database.sqlite.folder")
+	if viperDataFolder != "" {
+		dataFolder = viperDataFolder
+	}
 
 	dbFilePath := fmt.Sprintf(formatSqliteDatabasePath, dataFolder)
 	if err = createDirIfNotExist(ctx, dataFolder); err != nil {
@@ -119,13 +128,15 @@ func NewScoreV1SQLiteRepositorier(ctx cornerstone.Context) (result *ScoreV1SQLit
 	sqlitedb = db
 
 	score := &proto.ScoreV1{}
-	if hasTable := sqlitedb.HasTable(score); hasTable {
+	hasTable := sqlitedb.HasTable(score)
+	if hasTable {
 		cornerstone.Infof(ctx, "[%s] continue to reuse the table: %s", funcName, scoreV1TableName)
 		db.AutoMigrate(&proto.ScoreV1{})
 		return
 	}
 
-	if err = sqlitedb.CreateTable(score).Error; err != nil {
+	err = sqlitedb.CreateTable(score).Error
+	if err != nil {
 		return
 	}
 

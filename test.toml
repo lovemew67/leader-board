@@ -3,3 +3,6 @@
 
 [database.redis]
 	host = "localhost:6379"
+
+[database.sqlite]
+	folder = "./data"

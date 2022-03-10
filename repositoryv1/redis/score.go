@@ -61,7 +61,6 @@ func (s *ScoreV1RedisCacheRepositorier) GetTopKScores(ctx cornerstone.Context) (
 	} else {
 		cornerstone.Debugf(ctx, "[%s] got top k scores in redis", funcName)
 	}
-
 	scores = scoreList.Scores
 	return
 }
@@ -77,6 +76,7 @@ func (s *ScoreV1RedisCacheRepositorier) CleanTopKScores(ctx cornerstone.Context)
 	if !exist {
 		return
 	}
+
 	err = s.pool.Delete(lb.DefaultMaxLengthStr)
 	if err != nil {
 		cornerstone.Errorf(ctx, "[%s] s.pool.Delete failed, err: %+v", funcName, err)
