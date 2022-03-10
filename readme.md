@@ -29,7 +29,7 @@ make leaderboard
 ```
 預設讀取local.toml作為config, API server listen 8999 port, sqlite檔案放在data資料夾下, redis連線到localhost:6379, 使用DB 0
 
-- 本地起API server (multiple server)
+- 本地起API server (multiple servers)
 ```
 make install
 ```
@@ -47,7 +47,7 @@ leader-board leaderboard --config somewhere.toml
 REST_PORT=7999 DATABASE_REDIS_HOST=localhost:6379 DATABASE_SQLITE_FOLDER=/Users/zzh/Downloads/sqlite leader-board leaderboard
 ```
 
-- 起本地API文件viewer
+- 起本地API文件viewer, 可以起server後直接戳
 ```
 make swaggerui
 ```
@@ -73,7 +73,7 @@ make swaggerui
 - 使用viper讀取config, 能夠輕鬆在不同層級overwrite
 - database跟cache部分使用sqlite跟redis, 因為relational database跟cache目前只使用過這兩種. 平台其他大部分應用使用mongoDB, 記帳使用OracleDB
 - 使用clean architectire寫法, 切割controller, service, repositoy跟domain. 層層包法讓各層能專注在各自的功能, 不用在意下層的實作, 單元測試也能用gomock簡單mock掉. 不過取捨就是當實作開始多了, 一旦有interface change會很痛苦
-- 因為multi server設定, API server裡面不存放狀態 (local cache, etc.), 盡量從remote cache跟database存取狀態, 寫入資料的時候清除cache, 讀取時先從cache讀, 如果miss在從database讀資料再塞入cache
+- 因為multi server設定, API server裡面不存放狀態 (local cache, etc.), 盡量從remote cache跟database存取狀態, 寫入資料的時候清除cache, 讀取時先從cache讀, 如果miss再從database讀資料再塞入cache
 - 每隔十分鐘清除的設計因為來不及思考是從什麼時候開始算十分鐘, 所以實作cronjob每10th分鐘清理database table跟cache
 - API response加上transit id, 如果server有接ELK的話, 方便在上面查找
 

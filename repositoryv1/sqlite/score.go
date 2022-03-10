@@ -24,6 +24,7 @@ type ScoreV1SQLiteRepositorier struct{}
 func (s *ScoreV1SQLiteRepositorier) InsertScore(ctx cornerstone.Context, score *proto.ScoreV1) (result *proto.ScoreV1, err error) {
 	funcName := "ScoreV1SQLiteRepositorier.InsertScore"
 
+	// FIXME: real updated
 	now := time.Now().UnixNano()
 	score.Created = now
 	score.Updated = now
@@ -37,8 +38,8 @@ func (s *ScoreV1SQLiteRepositorier) InsertScore(ctx cornerstone.Context, score *
 		cornerstone.Errorf(ctx, "[%s] database opertaion err: %+v", funcName, err)
 		return
 	}
-	db = db.Create(score)
 
+	db = db.Create(score)
 	err = db.Error
 	if err != nil {
 		cornerstone.Errorf(ctx, "[%s] database opertaion err: %+v", funcName, err)

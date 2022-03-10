@@ -52,25 +52,23 @@ func (s *ScoreV1Servicer) ListTopKScoresV1Service(ctx cornerstone.Context, req *
 		if len(results) >= req.Limit {
 			results = results[:req.Limit]
 		}
-	} else {
-		if err == lb.ErrRedisKeyNotFound {
-			cornerstone.Debugf(ctx, "[%s] cache miss", funcName)
-			results, err = s.r.ListTopKHighestScores(ctx, lb.DefaultMaxLengthInt)
+	} else if err == lb.ErrRedisKeyNotFound {
+		cornerstone.Debugf(ctx, "[%s] cache miss", funcName)
+		results, err = s.r.ListTopKHighestScores(ctx, lb.DefaultMaxLengthInt)
+		if err != nil {
+			return
+		}
+		cornerstone.Debugf(ctx, "[%s] got top k highest scores from databse", funcName)
+		// FIXME: json null after first get empty list
+		if len(results) != 0 {
+			err = s.cr.SetTopKScores(ctx, results)
 			if err != nil {
 				return
 			}
-			cornerstone.Debugf(ctx, "[%s] got top k highest scores from databse", funcName)
-			// FIXME: json null after first get empty list
-			if len(results) != 0 {
-				err = s.cr.SetTopKScores(ctx, results)
-				if err != nil {
-					return
-				}
-				cornerstone.Debugf(ctx, "[%s] set top k highest scores to cache", funcName)
-			}
-			if len(results) >= req.Limit {
-				results = results[:req.Limit]
-			}
+			cornerstone.Debugf(ctx, "[%s] set top k highest scores to cache", funcName)
+		}
+		if len(results) >= req.Limit {
+			results = results[:req.Limit]
 		}
 	}
 	return
