@@ -75,6 +75,7 @@ make swaggerui
 - 使用clean architectire寫法, 切割controller, service, repositoy跟domain. 層層包法讓各層能專注在各自的功能, 不用在意下層的實作, 單元測試也能用gomock簡單mock掉. 不過取捨就是當實作開始多了, 一旦有interface change會很痛苦
 - 因為multi server設定, API server裡面不存放狀態 (local cache, etc.), 盡量從remote cache跟database存取狀態, 寫入資料的時候清除cache, 讀取時先從cache讀, 如果miss在從database讀資料再塞入cache
 - 每隔十分鐘清除的設計因為來不及思考是從什麼時候開始算十分鐘, 所以實作cronjob每10th分鐘清理database table跟cache
+- API response加上transit id, 如果server有接ELK的話, 方便在上面查找
 
 ## TODO
 - rate limitation
